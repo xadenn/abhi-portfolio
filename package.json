@@ -1,10 +1,10 @@
 {
-  "name": "ria-portfolio",
+  "name": "abhijith-sunil-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "db:verify": "node scripts/db-manage.mjs verify",

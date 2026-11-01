@@ -24,13 +24,13 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
 
     // Instantiate ultra-premium Lenis smooth scroll engine
     const instance = new Lenis({
-      duration: 1.2, // Silky, weighted momentum that glides into place
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Velvet exponential deceleration curve
+      duration: 1.6, // Velvet deceleration momentum for butter-smooth gliding
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential deceleration curve
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 0.95, // Calibrated momentum preventing aggressive wheel jumps
-      touchMultiplier: 1.0, // Natural 1:1 tactile touch response on phones
+      wheelMultiplier: 0.65, // Calibrated down from 0.95: prevents fast jumping, feels controlled and buttery
+      touchMultiplier: 0.85, // Smooth, natural touch response on phones and trackpads
       syncTouch: false, // Prevents mobile touch gestures from fighting native momentum
       infinite: false,
       autoRaf: false, // Driven by GSAP ticker for 120Hz/60Hz frame-perfect synchronization
@@ -73,7 +73,7 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
           e.preventDefault();
           instance.scrollTo(targetElement as HTMLElement, {
             offset: -30,
-            duration: 1.35,
+            duration: 1.6,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
         }

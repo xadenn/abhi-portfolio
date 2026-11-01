@@ -23,8 +23,8 @@ async function runLaunchAudit() {
     const homeRes = await fetch(`${BASE_URL}/`);
     const homeHtml = await homeRes.text();
     assert(homeRes.status === 200, "Homepage Status 200 OK");
-    assert(homeHtml.includes("Ria Verma"), "Homepage Brand Metadata Present", "Found 'Ria Verma'");
-    assert(homeHtml.includes("Design Engineer"), "Headline Role Present", "Found 'Design Engineer'");
+    assert(homeHtml.includes("Abhijith Sunil"), "Homepage Brand Metadata Present", "Found 'Abhijith Sunil'");
+    assert(homeHtml.includes("Trade Settlement"), "Headline Role Present", "Found 'Trade Settlement'");
   } catch (err) {
     assert(false, "Homepage fetch failed", err.message);
   }

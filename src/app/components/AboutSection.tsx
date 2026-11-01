@@ -3,10 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import FadeIn from "./FadeIn";
 import ContactButton from "./ContactButton";
 import { usePortfolio } from "@/context/PortfolioContext";
-import { TextEffect } from "@/components/ui/text-effect";
+import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,7 +24,7 @@ export default function AboutSection() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Pin section until the character-by-character text animation is fully completed
+  // Pin section on BOTH mobile and desktop until character-by-character scrub completes 100%
   useEffect(() => {
     const pinTrack = pinTrackRef.current;
     const pinnedViewport = pinnedViewportRef.current;
@@ -38,29 +37,30 @@ export default function AboutSection() {
       pin: pinnedViewport,
       start: "top top",
       end: "bottom bottom",
-      scrub: isMobile ? 0.3 : 0.5,
-      anticipatePin: isMobile ? 0 : 1,
+      scrub: 0.5,
+      anticipatePin: 1,
       fastScrollEnd: true,
       preventOverlaps: true,
       onUpdate: (self) => {
         const p = self.progress;
-        // Text animation completes smoothly
+        // Text animation finishes completely at 75% of pinned scroll,
+        // so the user reads the 100% revealed text before the pin unlocks.
         const leadIn = 0.04;
-        const revealEnd = isMobile ? 0.55 : 0.65;
+        const revealEnd = 0.75;
         const animT = Math.max(0, Math.min(1, (p - leadIn) / (revealEnd - leadIn)));
 
         for (let i = 0; i < total; i++) {
           const el = charRefs.current[i];
           if (!el) continue;
           const charStart = i / total;
-          const charEnd = Math.min(1, charStart + 0.035);
+          const charEnd = Math.min(1, charStart + 0.03);
           if (animT <= charStart) {
-            el.style.opacity = "0.2";
+            el.style.opacity = "0.18";
           } else if (animT >= charEnd) {
             el.style.opacity = "1";
           } else {
             const localT = (animT - charStart) / (charEnd - charStart);
-            el.style.opacity = String(0.2 + 0.8 * localT);
+            el.style.opacity = String(0.18 + 0.82 * localT);
           }
         }
       },
@@ -77,111 +77,45 @@ export default function AboutSection() {
     <section
       id="about"
       ref={pinTrackRef}
-      className="relative w-full bg-[#0C0C0C]"
-      style={{ height: isMobile ? "140vh" : "280vh" }}
-      aria-label="About Ria Verma"
+      className="relative w-full bg-[#070707]"
+      style={{ height: isMobile ? "220vh" : "260vh" }}
+      aria-label="About Abhijith Sunil"
     >
-      {/* Pinned Fullscreen Stage: Stays in place until text animation completes */}
+      {/* Fullscreen Stage: Pinned on both mobile and desktop so scrub completes before section scrolls */}
       <div
         ref={pinnedViewportRef}
-        className="w-full h-screen h-[100dvh] overflow-hidden relative flex flex-col items-center justify-center px-6 sm:px-12 md:px-16 bg-[#0C0C0C] font-kanit text-[#D7E2EA] select-none"
+        className="w-full h-[100dvh] max-h-[100dvh] overflow-hidden relative flex flex-col items-center justify-center px-4 sm:px-8 md:px-12 bg-[#070707] font-kanit text-[#D7E2EA] select-none"
       >
-        {/* ─────────────────────────────────────────────────────────────
-            FOUR 3D DECORATIVE ARTIFACTS IN THE EXACT FOUR CORNERS
-            Large, immersive, atmospheric background placement (z-0)
-            Mobile: w-[130px], bleeding gracefully into background corners
-            Desktop: w-[220px]-w-[260px], luxurious full-bleed presence
-            ───────────────────────────────────────────────────────────── */}
-        {/* Top-left: Moon icon */}
+        {/* Subtle radial lighting for deep editorial contrast */}
         <div
-          className="absolute pointer-events-none z-0 top-1 -left-2 sm:top-5 sm:left-4 md:top-6 md:left-6 lg:top-8 lg:left-8"
+          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full opacity-[0.04] blur-[140px]"
+          style={{ background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)" }}
           aria-hidden="true"
-        >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
-            alt=""
-            width={260}
-            height={260}
-            className="w-[125px] sm:w-[160px] md:w-[210px] lg:w-[250px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.65)] animate-pulse [animation-duration:8s]"
-            draggable={false}
-          />
-        </div>
-
-        {/* Top-right: Lego icon */}
-        <div
-          className="absolute pointer-events-none z-0 top-1 -right-2 sm:top-5 sm:right-4 md:top-6 md:right-6 lg:top-8 lg:right-8"
-          aria-hidden="true"
-        >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
-            alt=""
-            width={260}
-            height={260}
-            className="w-[125px] sm:w-[160px] md:w-[210px] lg:w-[250px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.65)] animate-pulse [animation-duration:7s]"
-            draggable={false}
-          />
-        </div>
-
-        {/* Bottom-left: Smiley face */}
-        <div
-          className="absolute pointer-events-none z-0 bottom-1 -left-2 sm:bottom-4 sm:left-4 md:bottom-6 md:left-6 lg:bottom-8 lg:left-8"
-          aria-hidden="true"
-        >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
-            alt=""
-            width={240}
-            height={240}
-            className="w-[115px] sm:w-[150px] md:w-[190px] lg:w-[230px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.65)] animate-pulse [animation-duration:9s]"
-            draggable={false}
-          />
-        </div>
-
-        {/* Bottom-right: 3D cursor arrow */}
-        <div
-          className="absolute pointer-events-none z-0 bottom-1 -right-2 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 lg:bottom-8 lg:right-8"
-          aria-hidden="true"
-        >
-          <img
-            src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
-            alt=""
-            width={260}
-            height={260}
-            className="w-[125px] sm:w-[160px] md:w-[210px] lg:w-[250px] object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.65)] animate-pulse [animation-duration:8.5s]"
-            draggable={false}
-          />
-        </div>
+        />
 
         {/* ─────────────────────────────────────────────────────────────
-            EXPANSIVE CENTER COLUMN: FILLS THE SCREEN WITH BREATHING ROOM
+            EXPANSIVE CENTER COLUMN: OPTICALLY CENTERED ON BOTH MOBILE & DESKTOP
             ───────────────────────────────────────────────────────────── */}
-        <div className="relative z-20 flex flex-col items-center text-center max-w-5xl lg:max-w-6xl w-full mx-auto my-auto px-4">
-          {/* Bold Display Heading */}
-          <FadeIn delay={0} y={30} duration={0.8}>
-            <TextEffect
-              as="h2"
-              per="char"
-              preset="fade"
-              className="hero-heading font-black uppercase leading-none tracking-tight text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem]"
-            >
-              About me
-            </TextEffect>
-          </FadeIn>
+        <div className="relative z-20 flex flex-col items-center text-center max-w-4xl lg:max-w-5xl w-full mx-auto my-auto px-3 sm:px-6">
+          {/* Bold Display Heading - Centered with commanding typographic presence */}
+          <h2 className="hero-heading font-display-hero font-extrabold uppercase leading-none tracking-tight text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white select-none">
+            Profile
+          </h2>
 
           {/* Dynamic Gap */}
-          <div className="h-6 sm:h-12 md:h-14" />
+          <div className="h-3 sm:h-5 md:h-7" />
 
-          {/* Character-by-Character Pinned Scroll Animated Text (Expansive Width) */}
-          <div className="max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl px-4 sm:px-6">
-            <p className="text-[#D7E2EA] font-medium leading-relaxed md:leading-[1.7] text-lg sm:text-xl md:text-2xl lg:text-[1.4rem] text-center">
+          {/* Character-by-Character Pinned Scroll Animated Text */}
+          <div className="max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl px-1 sm:px-4">
+            <p className="text-[#D7E2EA] font-normal leading-relaxed text-xs sm:text-base md:text-lg lg:text-xl text-center">
               {characters.map((char, i) => (
                 <span
                   key={i}
                   ref={(node) => {
                     charRefs.current[i] = node;
                   }}
-                  className="inline"
-                  style={{ opacity: 0.2 }}
+                  className="inline transition-opacity duration-75 text-white"
+                  style={{ opacity: 0.18 }}
                 >
                   {char}
                 </span>
@@ -189,42 +123,37 @@ export default function AboutSection() {
             </p>
           </div>
 
-          {/* Collaborator badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mt-4 sm:mt-8">
+          {/* Collaborator badges - Monochrome */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-3 sm:mt-5">
             {portfolio.profile.collaborations.map((company) => (
               <span
                 key={company}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-mono tracking-wider text-[#D7E2EA]/85 bg-white/[0.04] border border-[#D7E2EA]/20 backdrop-blur-sm"
+                className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 rounded-full text-[11px] sm:text-xs font-mono tracking-wider text-white/80 bg-white/[0.04] border border-white/15 backdrop-blur-sm"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D7E2EA]/70" />
+                <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
                 {company}
               </span>
             ))}
           </div>
 
           {/* Dynamic Gap */}
-          <div className="h-4 sm:h-12 md:h-14" />
+          <div className="h-3 sm:h-5 md:h-7" />
 
-          {/* Dual Action: Contact Me & See Journey (Side-by-side on mobile & desktop) */}
-          <FadeIn
-            delay={0.2}
-            y={20}
-            duration={0.8}
-            className="relative z-30 flex flex-row items-center justify-center gap-3 sm:gap-6 w-full max-w-sm sm:max-w-none px-2"
-          >
+          {/* Dual Action: Contact Me & See Experience - Monochrome */}
+          <div className="relative z-30 flex flex-row items-center justify-center gap-3 sm:gap-5 w-full max-w-sm sm:max-w-none px-2">
             <ContactButton
               label="Contact Me"
               href="#contact"
-              className="px-5 py-3 sm:px-10 sm:py-3.5 text-xs sm:text-sm md:text-base shrink-0"
+              className="px-5 py-2.5 sm:px-8 sm:py-3 text-xs sm:text-sm font-semibold shrink-0 bg-white text-black hover:bg-white/90"
             />
             <a
               href="#journey"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-base font-medium text-[#D7E2EA] bg-white/[0.05] hover:bg-white/[0.12] border border-[#D7E2EA]/20 transition-all duration-300 min-h-[44px] shrink-0 whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 sm:px-7 sm:py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-white/[0.06] hover:bg-white/[0.12] border border-white/20 transition-all duration-300 shrink-0 whitespace-nowrap"
             >
-              <span>See Journey</span>
-              <span className="text-[#D7E2EA]/70">→</span>
+              <span>See Experience</span>
+              <span className="text-white/70">→</span>
             </a>
-          </FadeIn>
+          </div>
         </div>
       </div>
     </section>

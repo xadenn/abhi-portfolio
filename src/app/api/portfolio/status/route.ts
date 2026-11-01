@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { isMongoConfigured, verifyMongoHealth } from "@/lib/mongodb";
 import { getPortfolioData } from "@/lib/portfolio-store";
 
+
 export async function GET() {
   const mongoConfigured = isMongoConfigured();
   const health = await verifyMongoHealth();

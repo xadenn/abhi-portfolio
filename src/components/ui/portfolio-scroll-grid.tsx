@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /* ── types ───────────────────────────────────────────────────── */
 
@@ -12,150 +11,189 @@ export interface PortfolioScrollGridImage {
 }
 
 export interface PortfolioScrollGridProps {
-  /** Name pinned to the centre of the viewport, between the layered photos. */
+  /** Name or phrase pinned to the centre of the viewport behind/between scrolling photos */
   title: React.ReactNode;
-  /**
-   * Photos, recycled to fill the grid. Pass 8 or more and no photo ever
-   * touches a copy of itself.
-   */
+  /** Photos recycled to fill the grid */
   images: PortfolioScrollGridImage[];
-  /** Grid rows — sets how long the section scrolls. Default `8`. */
+  /** Grid rows — sets how long the section scrolls. Default 7 */
   rows?: number;
   className?: string;
 }
 
-/* ── layout constants ────────────────────────────────────────── */
+// Fallback image from abhi img
+const FALLBACK_IMAGE = "/images/abhi/abhi-01.jpeg";
 
-const COLUMNS = 5;
-const CENTER = 2;
+/* ── individual grid card (Clean, Spacious & Multi-Depth 3D Layering) ── */
 
-const COL = 26.98;
-const ROW = 32.23;
-const BOX_W = 22;
-const BOX_H = 21.24;
-const TITLE = 5.63;
+function GridCard({
+  image,
+  boxWidth,
+  boxHeight,
+  rowHeight,
+  isOverText,
+  yOffset,
+}: {
+  image: PortfolioScrollGridImage;
+  boxWidth: number;
+  boxHeight: number;
+  rowHeight: number;
+  isOverText: boolean;
+  yOffset?: number;
+}) {
+  const [imgSrc, setImgSrc] = React.useState(image.src);
 
-const u = (n: number) => `calc(var(--u) * ${n})`;
+  // Update image source if prop changes
+  React.useEffect(() => {
+    setImgSrc(image.src);
+  }, [image.src]);
 
-// PHASE: offset so the centre column drops and clears the initial view
-const PHASE = `mod(50vh - ${u(ROW / 2)}, ${u(ROW)})`;
+  const handleClick = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-/**
- * Determines whether a card in column `c` and row `r` should be in the
- * FOREGROUND layer (z-30, rendering over the text and covering parts of it)
- * or in the BACKGROUND layer (z-10, rendering behind the text).
- */
-const isForegroundCard = (c: number, r: number): boolean => {
-  // Column 1 (left of text): odd rows in front
-  if (c === 1) return r % 2 === 1;
-  // Column 2 (centre of text): odd rows in front
-  if (c === 2) return r % 2 === 1;
-  // Column 3 (right of text): even rows in front
-  if (c === 3) return r % 2 === 0;
-  // Outer columns (0 and 4): stay in background
-  return false;
-};
+  return (
+    <div
+      className="relative flex items-center justify-center pointer-events-auto"
+      style={{
+        height: `calc(var(--u) * ${rowHeight})`,
+        // Depth layering relative to pinned title (z-20):
+        // isOverText = true  -> z-index 30 (scrolls OVER / in front of the text)
+        // isOverText = false -> z-index 10 (scrolls UNDER / behind the text)
+        zIndex: isOverText ? 30 : 10,
+        transform: yOffset ? `translateY(calc(var(--u) * ${yOffset}))` : undefined,
+      }}
+    >
+      <div
+        onClick={handleClick}
+        className="relative overflow-hidden rounded-2xl cursor-pointer select-none border border-white/10 bg-[#0e0e0e] shadow-[0_16px_40px_rgba(0,0,0,0.85)]"
+        style={{
+          width: `calc(var(--u) * ${boxWidth})`,
+          height: `calc(var(--u) * ${boxHeight})`,
+        }}
+        title="Get in touch"
+      >
+        <img
+          src={imgSrc}
+          alt={image.alt}
+          loading="lazy"
+          decoding="async"
+          onError={() => setImgSrc(FALLBACK_IMAGE)}
+          className="h-full w-full object-cover select-none"
+        />
+      </div>
+    </div>
+  );
+}
 
 /* ── component ───────────────────────────────────────────────── */
 
 export function PortfolioScrollGrid({
   title,
   images,
-  rows = 8,
+  rows = 7,
   className,
 }: PortfolioScrollGridProps) {
-  const sectionRef = React.useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    // Refresh ScrollTrigger so Lenis and GSAP coordinate layout accurately
-    if (typeof window !== "undefined") {
-      const timer = setTimeout(() => {
-        try {
-          ScrollTrigger.refresh();
-        } catch {
-          // ignore if ScrollTrigger not active
-        }
-      }, 400);
-      return () => clearTimeout(timer);
-    }
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  const handleTitleClick = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Spacious, luxury proportions with generous negative space between images:
+  // Mobile: 3 columns, 6 rows, airy spacing
+  // Desktop: 5 columns, 7 rows, refined airy gallery spacing
+  const cols = isMobile ? 3 : 5;
+  const colPitch = isMobile ? 36 : 28;
+  const boxW = isMobile ? 25 : 19;
+  const boxH = isMobile ? 22 : 19.5;
+  const rowPitch = isMobile ? 38 : 38;
+  const activeRows = isMobile ? 6 : rows;
 
   return (
     <section
-      ref={sectionRef}
-      className={cn("relative w-full overflow-clip bg-[#0C0C0C]", className)}
+      className={cn("relative w-full overflow-clip bg-[#070707]", className)}
       style={
         {
           containerType: "inline-size",
-          // Floored so photos stay legible on phones; outer columns run off edges
-          "--u": "max(1cqw, 5.5px)",
+          "--u": isMobile ? "clamp(3.8px, 1.05cqw, 7px)" : "clamp(4.2px, 1cqw, 14.5px)",
         } as React.CSSProperties
       }
     >
-      {/* ── TOP EDGE FADE VIGNETTE (z-40) ─────────────────────────
-          Crisp gradient fade into pure #0C0C0C (no blur), preventing any
-          cards from spilling into the previous section. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-32 sm:h-44 z-40 bg-gradient-to-b from-[#0C0C0C] via-[#0C0C0C]/85 to-transparent" />
+      {/* ── TOP EDGE FADE VIGNETTE (z-40) ───────────────────────── */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 sm:h-44 z-40 bg-gradient-to-b from-[#070707] via-[#070707]/85 to-transparent" />
 
-      {/* ── PINNED TITLE LAYER (z-20) ─────────────────────────────
-          Sticky in viewport centre throughout the section scroll.
-          Crisp, sharp typography with deep contrast and zero blur. */}
+      {/* ── PINNED TITLE LAYER (z-20: Floating in the middle depth plane) ──
+          Photos with z-10 scroll UNDER the text (the letters sit on top).
+          Photos with z-30 scroll OVER the text (the photos pass in front). */}
       <div className="sticky top-0 z-20 flex h-screen w-full items-center justify-center px-4 pointer-events-none">
-        <h2
-          className="text-center font-extrabold uppercase leading-none tracking-tight text-foreground font-kanit select-none drop-shadow-[0_12px_45px_rgba(0,0,0,0.98)]"
-          style={{ fontSize: u(TITLE) }}
+        <button
+          type="button"
+          onClick={handleTitleClick}
+          className="pointer-events-auto cursor-pointer focus:outline-none"
+          aria-label="Contact me"
         >
-          {title}
-        </h2>
+          <h2
+            className="text-center font-display-hero font-extrabold uppercase leading-none tracking-tight text-white select-none drop-shadow-[0_12px_45px_rgba(0,0,0,0.98)]"
+            style={{ fontSize: isMobile ? "clamp(2rem, 9vw, 3.25rem)" : "calc(var(--u) * 5.63)" }}
+          >
+            {title}
+          </h2>
+        </button>
       </div>
 
-      {/* ── LAYER 1: BACKGROUND PHOTO GRID (z-10) ─────────────────
-          Direct in-flow grid pulled up by -100vh to overlap sticky title.
-          Renders cards that pass BEHIND the text. */}
-      <div className="relative flex justify-center -mt-[100vh] pt-14 sm:pt-20 pb-24 sm:pb-36 z-10">
-        {Array.from({ length: COLUMNS }, (_, c) => {
-          const colTransform =
-            c === CENTER
-              ? `translateY(calc(50vh - ${PHASE} + ${u(ROW * 1.5)}))`
-              : c % 2
-                ? `translateY(${u(ROW / 2)})`
-                : undefined;
+      {/* ── PHOTOS SCROLLING GRID (Pre-filled above viewport: Zero empty space) ──
+          Columns do NOT create a stacking context so individual cards weave
+          both in front of (z-30) and underneath (z-10) the text! */}
+      <div
+        className="relative flex justify-center pb-24 sm:pb-36"
+        style={{ marginTop: `calc(-1 * var(--u) * ${rowPitch * 1.5})` }}
+      >
+        {Array.from({ length: cols }, (_, c) => {
+          // Odd columns are staggered vertically by half a row for continuous diagonal flow
+          const isOddCol = c % 2 === 1;
+          const yOffset = isOddCol ? rowPitch / 2 : undefined;
 
           return (
-            <div key={c} className="shrink-0" style={{ width: u(COL) }}>
-              {Array.from({ length: rows }, (_, r) => {
+            <div
+              key={c}
+              className="shrink-0"
+              style={{
+                width: `calc(var(--u) * ${colPitch})`,
+              }}
+            >
+              {Array.from({ length: activeRows }, (_, r) => {
                 const image =
-                  images[(r + c * 4 + (c === CENTER ? 3 : 0)) % images.length];
-                const isFg = isForegroundCard(c, r);
+                  images[(r + c * 3) % images.length];
+
+                // Alternating depth per card:
+                // Even cards (r + c) % 2 === 0 -> z-10 (scrolls UNDER the text!)
+                // Odd cards (r + c) % 2 === 1  -> z-30 (scrolls OVER the text!)
+                // In Column 1 on mobile: half the cards pass UNDER, half pass OVER!
+                const isOverText = (r + c) % 2 === 1;
 
                 return (
-                  <div
+                  <GridCard
                     key={r}
-                    className="relative flex items-center justify-center"
-                    style={{
-                      height: u(ROW),
-                      transform: colTransform,
-                    }}
-                  >
-                    {/* Render card in background layer only if not designated for foreground */}
-                    {!isFg && image ? (
-                      <div
-                        className="overflow-hidden rounded-xl bg-neutral-900 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.7)]"
-                        style={{ width: u(BOX_W), height: u(BOX_H) }}
-                      >
-                        <img
-                          src={image.src}
-                          alt={image.alt}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover select-none"
-                        />
-                      </div>
-                    ) : (
-                      // Empty placeholder to preserve column spacing
-                      <div style={{ width: u(BOX_W), height: u(BOX_H) }} />
-                    )}
-                  </div>
+                    image={image}
+                    boxWidth={boxW}
+                    boxHeight={boxH}
+                    rowHeight={rowPitch}
+                    isOverText={isOverText}
+                    yOffset={yOffset}
+                  />
                 );
               })}
             </div>
@@ -163,65 +201,8 @@ export function PortfolioScrollGrid({
         })}
       </div>
 
-      {/* ── LAYER 2: FOREGROUND PHOTO GRID (z-30) ─────────────────
-          Positioned absolute over the grid.
-          Renders cards that pass IN FRONT OF the text, covering parts of
-          the letters with physical drop shadows. */}
-      <div className="absolute inset-0 flex justify-center pt-14 sm:pt-20 pb-24 sm:pb-36 z-30 pointer-events-none">
-        {Array.from({ length: COLUMNS }, (_, c) => {
-          const colTransform =
-            c === CENTER
-              ? `translateY(calc(50vh - ${PHASE} + ${u(ROW * 1.5)}))`
-              : c % 2
-                ? `translateY(${u(ROW / 2)})`
-                : undefined;
-
-          return (
-            <div key={c} className="shrink-0" style={{ width: u(COL) }}>
-              {Array.from({ length: rows }, (_, r) => {
-                const image =
-                  images[(r + c * 4 + (c === CENTER ? 3 : 0)) % images.length];
-                const isFg = isForegroundCard(c, r);
-
-                return (
-                  <div
-                    key={r}
-                    className="relative flex items-center justify-center"
-                    style={{
-                      height: u(ROW),
-                      transform: colTransform,
-                    }}
-                  >
-                    {/* Render card in foreground layer so it passes over the text */}
-                    {isFg && image ? (
-                      <div
-                        className="overflow-hidden rounded-xl bg-neutral-900 border border-white/20 shadow-[0_30px_70px_rgba(0,0,0,0.98),0_0_20px_rgba(255,255,255,0.06)] ring-1 ring-white/15 pointer-events-auto transition-transform hover:scale-[1.02]"
-                        style={{ width: u(BOX_W), height: u(BOX_H) }}
-                      >
-                        <img
-                          src={image.src}
-                          alt={image.alt}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover select-none"
-                        />
-                      </div>
-                    ) : (
-                      // Empty placeholder to preserve column spacing
-                      <div style={{ width: u(BOX_W), height: u(BOX_H) }} />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* ── BOTTOM EDGE FADE VIGNETTE (z-40) ──────────────────────
-          Crisp gradient fade into pure #0C0C0C (no blur), preventing any
-          cards from spilling into the Contact section below. */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 sm:h-44 z-40 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/85 to-transparent" />
+      {/* ── BOTTOM EDGE FADE VIGNETTE (z-40) ────────────────────── */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 sm:h-44 z-40 bg-gradient-to-t from-[#070707] via-[#070707]/85 to-transparent" />
     </section>
   );
 }

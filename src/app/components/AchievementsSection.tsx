@@ -2,10 +2,47 @@
 
 import React, { useRef } from "react";
 import FadeIn from "./FadeIn";
-import TiltCard from "./TiltCard";
-import { Trophy, Medal, Crown, UsersThree, Sparkle, ArrowUpRight } from "@phosphor-icons/react";
 import { usePortfolio } from "@/context/PortfolioContext";
 import { TextEffect } from "@/components/ui/text-effect";
+import { cn } from "@/lib/utils";
+import { Achievement } from "@/types/portfolio";
+
+function AchievementCard({ item }: { item: Achievement }) {
+  return (
+    <div className="relative h-full p-7 sm:p-9 rounded-2xl border border-white/[0.08] bg-[#0d0d0d] flex flex-col justify-between cursor-default overflow-hidden shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+      {/* Subtle monochrome radial background glow */}
+      <div
+        className="pointer-events-none absolute -bottom-10 -right-10 w-48 h-48 rounded-full opacity-60 blur-2xl"
+        style={{ background: "radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%)" }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10">
+        {/* Metric with refined white glow */}
+        <div className="mb-4">
+          <div className="text-5xl sm:text-6xl md:text-7xl font-display-hero font-black tracking-tight leading-none select-none inline-block text-white drop-shadow-[0_0_16px_rgba(255,255,255,0.35)]">
+            {item.metric}
+          </div>
+        </div>
+
+        {/* Company Name */}
+        <h3 className="font-display-hero font-extrabold text-2xl sm:text-3xl text-white uppercase tracking-tight mb-2">
+          {item.organization}
+        </h3>
+
+        {/* Milestone / Title */}
+        <p className="font-mono text-xs uppercase tracking-wider text-white/70 font-semibold mb-3">
+          {item.title}
+        </p>
+
+        {/* Description */}
+        <p className="text-sm sm:text-base text-[#D7E2EA]/80 font-light leading-relaxed font-sans">
+          {item.description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function AchievementsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -16,89 +53,41 @@ export default function AchievementsSection() {
     <section
       id="achievements"
       ref={sectionRef}
-      className="relative w-full py-28 sm:py-36 bg-[#0C0C0C] font-kanit text-[#D7E2EA] overflow-hidden"
-      aria-label="Honors and Key Achievements"
+      className="relative w-full py-28 sm:py-36 bg-[#070707] font-kanit text-[#D7E2EA] overflow-hidden"
+      aria-label="Performance"
     >
-      {/* Background ambient lighting - subtle neutral specular wash */}
+      {/* Background ambient lighting - monochrome specular wash */}
       <div
-        className="pointer-events-none absolute bottom-0 right-1/4 w-[600px] h-[400px] rounded-full opacity-[0.03] blur-[140px]"
-        style={{ background: "radial-gradient(circle, rgba(215,226,234,0.06) 0%, transparent 70%)" }}
+        className="pointer-events-none absolute bottom-0 right-1/4 w-[600px] h-[400px] rounded-full opacity-[0.05] blur-[140px]"
+        style={{ background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
 
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
-        {/* Header */}
+        {/* Header (No eyebrow text) */}
         <div className="flex flex-col items-center text-center mb-16 sm:mb-20">
-          <FadeIn delay={0} y={25}>
-            <span className="text-xs font-mono tracking-[0.25em] text-[#D7E2EA]/75 uppercase block mb-3">
-              Recognition &amp; Impact
-            </span>
-          </FadeIn>
-          <FadeIn delay={0.1} y={30}>
+          <FadeIn delay={0} y={30}>
             <TextEffect
               as="h2"
               per="char"
               preset="fade"
-              className="hero-heading font-black uppercase text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-none"
+              className="hero-heading font-display-hero font-extrabold uppercase text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-none"
             >
-              Achievements
+              Performance
             </TextEffect>
           </FadeIn>
-          <FadeIn delay={0.2} y={35}>
-            <p className="text-[#D7E2EA]/85 text-sm sm:text-base max-w-xl mt-4 font-light leading-relaxed">
-              Proven track record of competitive excellence, team mentorship, and organizational leadership across design fests, hackathons, and institutional clubs.
+          <FadeIn delay={0.1} y={35}>
+            <p className="text-[#D7E2EA]/85 text-sm sm:text-base max-w-xl mt-4 font-light leading-relaxed font-sans">
+              Quantified operational impact across institutional trade settlement, custody management, and client service at leading financial institutions.
             </p>
           </FadeIn>
         </div>
 
-        {/* 4 Achievements Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        {/* Achievements: Editorial Grid with Center Spotlight & Tactile Hover */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 border-t border-white/[0.08] pt-12 sm:pt-16">
           {achievements.map((item, index) => (
-            <FadeIn key={item.id} delay={0.1 * index} y={25}>
-              <TiltCard maxAngle={6} className="h-full">
-                <div className="relative h-full p-8 sm:p-10 rounded-[28px] bg-white/[0.03] hover:bg-white/[0.055] border border-white/10 hover:border-[#D7E2EA]/30 transition-all duration-500 flex flex-col justify-between group overflow-hidden">
-                  {/* Subtle corner specular highlight */}
-                  <div
-                    className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none blur-2xl"
-                    style={{ background: "radial-gradient(circle, rgba(215,226,234,0.2) 0%, transparent 70%)" }}
-                    aria-hidden="true"
-                  />
-
-                  <div>
-                    {/* Top Row: Metric & Tag */}
-                    <div className="flex items-start justify-between gap-4 mb-6">
-                      <div className="text-5xl sm:text-6xl font-black tracking-tight text-white group-hover:text-[#D7E2EA] transition-colors leading-none font-kanit">
-                        {item.metric}
-                      </div>
-                      <span className="text-xs font-mono px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#D7E2EA]/85 uppercase tracking-wider">
-                        {item.tag}
-                      </span>
-                    </div>
-
-                    {/* Title & Organization */}
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2 group-hover:translate-x-0.5 transition-transform">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs font-mono text-[#D7E2EA]/75 uppercase tracking-widest mb-4">
-                      {item.organization}
-                    </p>
-
-                    {/* Description */}
-                    <p className="text-sm sm:text-base text-[#D7E2EA]/85 font-light leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Bottom ornament */}
-                  <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-[#D7E2EA]/70">
-                    <span>Verified Milestone #{item.id}</span>
-                    <span className="text-[#D7E2EA]/85 flex items-center gap-1 group-hover:text-white transition-colors">
-                      <Sparkle size={14} weight="fill" />
-                      Excellence
-                    </span>
-                  </div>
-                </div>
-              </TiltCard>
+            <FadeIn key={item.id} delay={0.08 * index} y={25}>
+              <AchievementCard item={item} />
             </FadeIn>
           ))}
         </div>

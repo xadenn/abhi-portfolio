@@ -38,13 +38,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       case "check":
         return <Check size={16} weight="bold" className="text-emerald-400" />;
       case "audio-on":
-        return <SpeakerHigh size={16} weight="fill" className="text-indigo-400" />;
+        return <SpeakerHigh size={16} weight="fill" className="text-white" />;
       case "audio-off":
         return <SpeakerSlash size={16} weight="light" className="text-white/50" />;
       case "copy":
-        return <Copy size={16} weight="light" className="text-cyan-400" />;
+        return <Copy size={16} weight="light" className="text-white" />;
       default:
-        return <Sparkle size={16} weight="fill" className="text-indigo-400" />;
+        return <Sparkle size={16} weight="fill" className="text-white" />;
     }
   };
 

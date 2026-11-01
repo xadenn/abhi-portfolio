@@ -1,161 +1,137 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { usePortfolio } from "@/context/PortfolioContext";
+import { TiltedGridHero, TiltedGridImage } from "@/components/ui/tilted-grid-hero";
+
+const HERO_IMAGES: TiltedGridImage[] = [
+  {
+    src: "/images/abhi/abhi-01.jpeg",
+    alt: "Abhijith Sunil - Precision at Scale",
+  },
+  {
+    src: "/images/abhi/abhi-02.jpeg",
+    alt: "Institutional Financial Operations",
+  },
+  {
+    src: "/images/abhi/abhi-03.jpeg",
+    alt: "Trade Settlement Specialist",
+  },
+  {
+    src: "/images/abhi/abhi-04.jpeg",
+    alt: "Abhijith Sunil Portrait",
+  },
+  {
+    src: "/images/abhi/abhi-05.jpeg",
+    alt: "Custody Management & Operations",
+  },
+  {
+    src: "/images/abhi/abhi-07.jpeg",
+    alt: "Financial Market Professional",
+  },
+  {
+    src: "/images/abhi/abhi-08.jpeg",
+    alt: "Abhijith Sunil",
+  },
+  {
+    src: "/images/abhi/abhi-10.jpeg",
+    alt: "Trade Affirmation & Settlements",
+  },
+  {
+    src: "/images/abhi/abhi-11.jpeg",
+    alt: "Abhijith Sunil Portfolio",
+  },
+  {
+    src: "/images/abhi/abhi-12.jpeg",
+    alt: "Institutional Client Support",
+  },
+  {
+    src: "/images/abhi/abhi-13.jpeg",
+    alt: "Exception Resolution Workflows",
+  },
+  {
+    src: "/images/abhi/abhi-15.jpeg",
+    alt: "High-Volume Trade Settlement",
+  },
+  {
+    src: "/images/abhi/abhi-16.jpeg",
+    alt: "State Street Corporation & Infosys BPM",
+  },
+  {
+    src: "/images/abhi/abhi-17.jpeg",
+    alt: "Financial Risk & STP Excellence",
+  },
+  {
+    src: "/images/abhi/abhi-18.jpeg",
+    alt: "Abhijith Sunil Operations Specialist",
+  },
+  {
+    src: "/images/abhi/abhi-19.jpeg",
+    alt: "Global Custody & Markets",
+  },
+];
 
 export default function HeroSection() {
   const { portfolio } = usePortfolio();
-  const { profile } = portfolio;
-  const marqueeTrackRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Kinetic marquee: continuous smooth glide + scroll-driven acceleration
   useEffect(() => {
-    let animationFrame: number;
-    let baseOffset = 0;
-    const autoSpeed = 1.2;
-
-    const updateMarquee = () => {
-      baseOffset += autoSpeed;
-      const scrollInfluence = window.scrollY * 0.85;
-      const totalOffset = baseOffset + scrollInfluence;
-
-      if (marqueeTrackRef.current) {
-        const loopWidth = marqueeTrackRef.current.scrollWidth / 2;
-        if (loopWidth > 0) {
-          const currentX = -(totalOffset % loopWidth);
-          marqueeTrackRef.current.style.transform = `translate3d(${currentX}px, 0, 0)`;
-        }
-      }
-      animationFrame = requestAnimationFrame(updateMarquee);
-    };
-
-    animationFrame = requestAnimationFrame(updateMarquee);
-    return () => cancelAnimationFrame(animationFrame);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Clean uppercase name without any dash/hyphen
-  const marqueeWord = `${profile.name.toUpperCase()} `;
 
   return (
     <section
       id="hero"
-      className="relative h-[100dvh] w-full overflow-hidden bg-[#0C0C0C] font-hn text-cream select-none"
+      className="relative h-[100dvh] max-h-[100dvh] w-full overflow-hidden bg-[#070707] font-kanit text-cream select-none"
       aria-label="Hero"
     >
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 0 (default z): BACKGROUND IMAGE (Full-bleed)
-          ───────────────────────────────────────────────────────────── */}
-      <img
-        src={profile.heroImage || "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260729_022513_486985a2-ac8c-4278-91a8-071dcd9fcaff.png&w=1280&q=85"}
-        alt=""
-        width={1920}
-        height={1080}
-        className="absolute inset-0 h-full w-full object-cover anim-fade-in pointer-events-none"
-      />
-
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 1 (z-10): GIANT SCROLLING MARQUEE NAME (NO DASH, FULLY LEGIBLE)
-          ───────────────────────────────────────────────────────────── */}
-      <div
-        className="absolute inset-x-0 top-[16vh] sm:top-[14vh] z-10 overflow-hidden anim-fade-up pointer-events-none select-none"
-        style={{ animationDelay: "500ms" }}
+      <TiltedGridHero
+        images={HERO_IMAGES}
+        className="w-full h-full bg-[#070707]"
+        speed={4.2}
+        tileHeight={isMobile ? 24 : 20}
+        aspectRatio={16 / 9}
+        gap={6}
+        axis={isMobile ? 54 : 58}
+        curve={80}
+        fade={14}
       >
+        {/* Soft edge blend overlay */}
         <div
-          ref={marqueeTrackRef}
-          className="flex w-max whitespace-nowrap font-hn text-[16vh] sm:text-[26vh] leading-none text-cream tracking-tight uppercase font-bold will-change-transform"
-        >
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-          <span className="inline-block pr-[6vw]">{marqueeWord}&nbsp;</span>
-        </div>
-      </div>
-
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 2 (z-20): FRONT PORTRAIT (Full-bleed cutout overlay)
-          Natural edge-to-edge fit — no artificial scaling or cropped arms!
-          ───────────────────────────────────────────────────────────── */}
-      <img
-        src={profile.portraitImage || "https://stone-expand-60400629.figma.site/_assets/v11/8da570354e86aa0d44ac3e4aa335a72c8e750d68.png"}
-        alt="Portrait"
-        width={1920}
-        height={1080}
-        className="absolute inset-0 h-full w-full object-cover z-20 pointer-events-none anim-rise-in"
-        style={{ animationDelay: "300ms" }}
-      />
-
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 3 (z-25): SEAMLESS BOTTOM TRANSITION GRADIENT
-          Blends background image and portrait smoothly into #0C0C0C
-          ───────────────────────────────────────────────────────────── */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-44 sm:h-72 pointer-events-none z-25 bg-gradient-to-t from-[#0C0C0C] via-[#0C0C0C]/85 via-35% to-transparent"
-        aria-hidden="true"
-      />
-
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 4 (z-30): DESKTOP CREAM RULE & FOOTER
-          ───────────────────────────────────────────────────────────── */}
-      <div
-        className="hidden sm:block absolute inset-x-10 bottom-28 z-30 h-0.5 bg-cream anim-line"
-        style={{ animationDelay: "1200ms" }}
-      />
-
-      <footer
-        className="absolute inset-x-0 bottom-0 z-30 hidden sm:flex items-end justify-between px-10 pb-8 text-xs sm:text-sm leading-relaxed font-hn text-cream pointer-events-auto"
-        aria-label="Hero bottom summary"
-      >
-        <div
-          className="anim-fade-up flex flex-col font-light text-cream/90"
-          style={{ animationDelay: "1400ms" }}
-        >
-          <span className="font-semibold text-white tracking-wide">{profile.role}</span>
-          {profile.subtitles.map((sub, i) => (
-            <span key={i} className="text-cream/80">{sub}</span>
-          ))}
-        </div>
-
-        <div
-          className="anim-fade-up flex flex-col text-right font-light text-cream/90 space-y-0.5"
-          style={{ animationDelay: "1550ms" }}
-        >
-          <span>{profile.collaborations.slice(0, 2).join(" · ")}</span>
-          <span>{profile.location}</span>
-        </div>
-      </footer>
-
-      {/* ─────────────────────────────────────────────────────────────
-          LAYER 5 (z-30): MOBILE FOOTER CHROME (LINE CLEANLY ABOVE TEXT)
-          The cream rule is placed directly above the text container
-          with a generous margin so it NEVER crashes into or strikes
-          through "Design Engineer".
-          ───────────────────────────────────────────────────────────── */}
-      <div
-        className="anim-fade-up sm:hidden absolute inset-x-6 bottom-5 z-30 flex flex-col pointer-events-auto"
-        style={{ animationDelay: "1400ms" }}
-      >
-        {/* Cream horizontal rule with clean margin above text */}
-        <div
-          className="w-full h-0.5 bg-cream mb-4 anim-line"
-          style={{ animationDelay: "1200ms" }}
+          className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#070707] via-transparent to-[#070707]/30"
+          aria-hidden="true"
         />
 
-        <div className="flex items-end justify-between text-[11px] leading-tight font-hn text-cream">
-          <div className="flex flex-col font-light text-cream/90 space-y-1">
-            <span className="font-semibold text-white tracking-wide">{profile.role}</span>
-            {profile.subtitles.slice(0, 2).map((sub, i) => (
-              <span key={i} className="text-cream/80">{sub}</span>
-            ))}
+        {/* ─────────────────────────────────────────────────────────────
+            BALANCED EDITORIAL PLACEMENT (MOBILE & DESKTOP CALIBRATED)
+            - Desktop: Headline raised up & cylinder lowered so they never touch
+            - Mobile: Headline sits slightly lower with balanced breathing room
+            - Bottom: 2-line caption strictly below images
+            ───────────────────────────────────────────────────────────── */}
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-between pt-22 sm:pt-14 md:pt-16 lg:pt-18 pb-5 sm:pb-8 md:pb-10 px-4 sm:px-6 text-center pointer-events-none select-none">
+          {/* 1. TOP: Eyebrow + Ultra-Heavy Headline */}
+          <div className="pointer-events-auto">
+            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] text-[#D7E2EA]/60 block mb-1.5 sm:mb-2.5">
+              Institutional Operations
+            </span>
+            <h1 className="text-balance text-2xl sm:text-4xl md:text-5xl lg:text-[4.25rem] font-display-hero text-white leading-[0.98] sm:leading-[0.95] tracking-tight">
+              ABHIJITH SUNIL,
+              <br />
+              PRECISION AT SCALE.
+            </h1>
           </div>
 
-          <div className="flex flex-col text-right font-light text-cream/90 space-y-1">
-            <span>{profile.collaborations.slice(0, 2).join(" · ")}</span>
-            <span>{profile.location}</span>
+          {/* 2. BOTTOM: Clean 2-Line Caption */}
+          <div className="max-w-[280px] sm:max-w-md mx-auto pointer-events-auto pb-1 sm:pb-3">
+            <p className="text-balance text-[11px] sm:text-sm text-[#D7E2EA]/75 font-light leading-relaxed font-sans text-center">
+              Trade settlement, custody operations, and proactive exception resolution across US and global markets.
+            </p>
           </div>
         </div>
-      </div>
+      </TiltedGridHero>
     </section>
   );
 }

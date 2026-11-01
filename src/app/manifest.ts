@@ -2,13 +2,13 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Ria Verma — Design Engineer & Brand Designer",
-    short_name: "Ria Verma",
-    description: "Multidisciplinary UI/UX & Brand Designer with 2+ Years Experience.",
+    name: "Abhijith Sunil — Trade Settlement & Financial Operations",
+    short_name: "Abhijith Sunil",
+    description: "Financial operations professional specializing in trade settlement, custody management, and risk mitigation.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0C0C0C",
-    theme_color: "#0C0C0C",
+    background_color: "#070707",
+    theme_color: "#070707",
     icons: [
       {
         src: "/favicon.ico",

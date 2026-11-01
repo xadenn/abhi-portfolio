@@ -122,7 +122,7 @@ export default function AdminPage() {
   };
 
   const handleLogout = async () => {
-    if (confirm("Sign out of Ria Verma Atelier Archive?")) {
+    if (confirm("Sign out of Abhijith Sunil Operations Console?")) {
       try {
         await fetch("/api/admin/logout", { method: "POST" });
       } finally {
@@ -458,9 +458,9 @@ export default function AdminPage() {
   // ── Authentication Barrier Rendering ─────────────────────────────────────
   if (isAuthenticated === null) {
     return (
-      <div className="min-h-screen bg-[#0C0C0C] flex flex-col items-center justify-center p-6 text-white font-mono text-xs">
+      <div className="min-h-screen bg-[#070707] flex flex-col items-center justify-center p-6 text-white font-mono text-xs">
         <div className="flex flex-col items-center gap-4 anim-fade-in">
-          <div className="w-8 h-8 rounded-full border-2 border-white/20 border-t-[#A5B4FC] animate-spin" />
+          <div className="w-8 h-8 rounded-full border-2 border-white/20 border-t-[#FFFFFF] animate-spin" />
           <span className="text-white/40 uppercase tracking-widest text-[11px]">
             Verifying Atelier Security Clearance...
           </span>
@@ -471,7 +471,7 @@ export default function AdminPage() {
 
   if (isAuthenticated === false) {
     return (
-      <div className="min-h-screen bg-[#0C0C0C] text-white flex flex-col items-center justify-center p-6 relative selection:bg-[#A5B4FC]/25 selection:text-white">
+      <div className="min-h-screen bg-[#070707] text-white flex flex-col items-center justify-center p-6 relative selection:bg-[#FFFFFF]/25 selection:text-white">
         {/* Subtle Ambient Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(165,180,252,0.03)_0%,transparent_65%)] pointer-events-none" />
 
@@ -488,9 +488,9 @@ export default function AdminPage() {
         <div className="relative z-10 w-full max-w-xs space-y-6 text-center">
           <div className="space-y-1">
             <h1 className="font-kanit font-extrabold text-2xl tracking-wider text-white">
-              RIA VERMA
+              ABHIJITH SUNIL
             </h1>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#A5B4FC]/80">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#FFFFFF]/80">
               Admin Access
             </p>
           </div>
@@ -508,7 +508,7 @@ export default function AdminPage() {
                 placeholder="Password"
                 autoFocus
                 autoComplete="current-password"
-                className="w-full bg-white/[0.04] border border-white/10 focus:border-[#A5B4FC] rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder:text-white/30 focus:outline-none transition-colors font-mono"
+                className="w-full bg-white/[0.04] border border-white/10 focus:border-[#FFFFFF] rounded-xl px-4 py-3 pr-10 text-sm text-white placeholder:text-white/30 focus:outline-none transition-colors font-mono"
               />
               <button
                 type="button"
@@ -544,12 +544,12 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C] text-[#E0E7FF] font-sans antialiased selection:bg-[#A5B4FC]/25 selection:text-white pb-32">
+    <div className="min-h-screen bg-[#070707] text-[#E0E7FF] font-sans antialiased selection:bg-[#FFFFFF]/25 selection:text-white pb-32">
       {/* ─────────────────────────────────────────────────────────────
           LIQUID GLASS FUNCTIONAL HEADER (Apple HIG Layer 2)
           Backdrop-blur, hairline border, floating controls
           ───────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 bg-[#0C0C0C]/80 backdrop-blur-2xl border-b border-white/[0.08] px-4 sm:px-8 lg:px-12 py-3.5 transition-all">
+      <header className="sticky top-0 z-40 bg-[#070707]/80 backdrop-blur-2xl border-b border-white/[0.08] px-4 sm:px-8 lg:px-12 py-3.5 transition-all">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Brand & Monograph Breadcrumb */}
           <div className="flex items-center gap-3 sm:gap-5 min-w-0">
@@ -569,16 +569,16 @@ export default function AdminPage() {
 
             <div className="flex items-baseline gap-2 truncate">
               <span className="font-kanit font-extrabold text-sm sm:text-base tracking-wider text-white">
-                RIA VERMA
+                ABHIJITH SUNIL
               </span>
-              <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#A5B4FC]/80 hidden md:inline">
-                ATELIER ARCHIVE
+              <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-[#FFFFFF]/80 hidden md:inline">
+                OPERATIONS CONSOLE
               </span>
             </div>
 
             {hasUnsavedChanges && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider text-[#A5B4FC] bg-[#A5B4FC]/10 border border-[#A5B4FC]/25">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#A5B4FC] animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wider text-[#FFFFFF] bg-[#FFFFFF]/10 border border-[#FFFFFF]/25">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] animate-pulse" />
                 <span>UNSAVED</span>
               </span>
             )}
@@ -590,7 +590,7 @@ export default function AdminPage() {
             <div className="hidden lg:inline-flex items-center gap-2 text-[11px] uppercase tracking-wider text-white/60 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-white/[0.02]">
               <span
                 className={`w-1.5 h-1.5 rounded-full ${
-                  mongoConfigured ? "bg-[#A5B4FC] shadow-[0_0_8px_#A5B4FC]" : "bg-white/40"
+                  mongoConfigured ? "bg-[#FFFFFF] shadow-[0_0_8px_#FFFFFF]" : "bg-white/40"
                 }`}
               />
               <span>{mongoConfigured ? "ATLAS CLUSTER" : "LOCAL CACHE"}</span>
@@ -606,7 +606,7 @@ export default function AdminPage() {
               <span>PREVIEW</span>
               <ArrowUpRight
                 size={12}
-                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#A5B4FC]"
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#FFFFFF]"
               />
             </a>
 
@@ -679,7 +679,7 @@ export default function AdminPage() {
           ───────────────────────────────────────────────────────────── */}
       <nav
         aria-label="Editorial Chapters"
-        className="sticky top-[61px] z-30 bg-[#0C0C0C]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-8 lg:px-12 py-3"
+        className="sticky top-[61px] z-30 bg-[#070707]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-8 lg:px-12 py-3"
       >
         <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none py-1">
           {chapters.map((ch) => {
@@ -698,7 +698,7 @@ export default function AdminPage() {
                     : "text-white/50 hover:text-white hover:bg-white/[0.04]"
                 }`}
               >
-                <span className={isActive ? "text-black/60" : "text-[#A5B4FC]/80"}>
+                <span className={isActive ? "text-black/60" : "text-[#FFFFFF]/80"}>
                   {ch.index}
                 </span>
                 <span>{ch.label}</span>
@@ -729,13 +729,13 @@ export default function AdminPage() {
           <div className="space-y-16 lg:space-y-24 max-w-5xl mx-auto">
             {/* Chapter Hero Telemetry */}
             <div className="border-b border-white/[0.08] pb-10 space-y-4">
-              <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+              <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                 <span>CHAPTER 01</span>
                 <span>·</span>
                 <span>BIOGRAPHY &amp; TELEMETRY</span>
               </div>
               <h1 className="font-kanit text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
-                {draft.profile.name || "Ria Verma"}
+                {draft.profile.name || "Abhijith Sunil"}
               </h1>
               <p className="font-mono text-xs sm:text-sm text-white/60 uppercase tracking-wider max-w-2xl leading-relaxed">
                 {draft.profile.role} · {draft.profile.location} · {draft.profile.university}
@@ -745,7 +745,7 @@ export default function AdminPage() {
             {/* Visual Assets Preview & Config */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   VISUAL PERSONA ASSETS
                 </span>
                 <p className="text-xs text-white/50">
@@ -784,7 +784,7 @@ export default function AdminPage() {
             {/* Core Identity Form Fields */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   IDENTITY &amp; CREDENTIALS
                 </span>
                 <p className="text-xs text-white/50">
@@ -801,7 +801,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.name}
                     onChange={(e) => handleProfileChange("name", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -813,7 +813,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.role}
                     onChange={(e) => handleProfileChange("role", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -825,7 +825,7 @@ export default function AdminPage() {
                     type="email"
                     value={draft.profile.email}
                     onChange={(e) => handleProfileChange("email", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -837,7 +837,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.phone}
                     onChange={(e) => handleProfileChange("phone", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -849,7 +849,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.location}
                     onChange={(e) => handleProfileChange("location", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -861,7 +861,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.university}
                     onChange={(e) => handleProfileChange("university", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -873,7 +873,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.resumeUrl}
                     onChange={(e) => handleProfileChange("resumeUrl", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -882,7 +882,7 @@ export default function AdminPage() {
             {/* Manifesto Statement & Kinetic Bio */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   EDITORIAL NARRATIVE &amp; STATEMENT
                 </span>
                 <p className="text-xs text-white/50">
@@ -899,7 +899,7 @@ export default function AdminPage() {
                     rows={2}
                     value={draft.profile.headline}
                     onChange={(e) => handleProfileChange("headline", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl p-4 font-kanit text-xl sm:text-2xl text-cream focus:outline-none transition-colors leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl p-4 font-kanit text-xl sm:text-2xl text-cream focus:outline-none transition-colors leading-relaxed"
                   />
                 </div>
 
@@ -916,7 +916,7 @@ export default function AdminPage() {
                     rows={4}
                     value={draft.profile.aboutText}
                     onChange={(e) => handleProfileChange("aboutText", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl p-4 text-sm text-white/90 focus:outline-none transition-colors leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl p-4 text-sm text-white/90 focus:outline-none transition-colors leading-relaxed"
                   />
                 </div>
               </div>
@@ -925,7 +925,7 @@ export default function AdminPage() {
             {/* Social Dispatches */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   DIGITAL DISPATCHES
                 </span>
                 <p className="text-xs text-white/50">Public channel profiles</p>
@@ -940,7 +940,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.socials.linkedin}
                     onChange={(e) => handleSocialChange("linkedin", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
                   />
                 </div>
 
@@ -952,7 +952,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.socials.github}
                     onChange={(e) => handleSocialChange("github", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
                   />
                 </div>
 
@@ -964,7 +964,7 @@ export default function AdminPage() {
                     type="text"
                     value={draft.profile.socials.behance}
                     onChange={(e) => handleSocialChange("behance", e.target.value)}
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-xs font-mono text-white/80 focus:outline-none"
                   />
                 </div>
               </div>
@@ -973,7 +973,7 @@ export default function AdminPage() {
             {/* Collaborations & Subtitle Tags */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   COLLABORATIONS &amp; TICKER TAGS
                 </span>
                 <p className="text-xs text-white/50">Comma-separated company names and hero badges</p>
@@ -993,7 +993,7 @@ export default function AdminPage() {
                         e.target.value.split(",").map((s) => s.trim()).filter(Boolean)
                       )
                     }
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
 
@@ -1010,7 +1010,7 @@ export default function AdminPage() {
                         e.target.value.split(",").map((s) => s.trim()).filter(Boolean)
                       )
                     }
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-xl px-4 py-3 text-sm text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -1026,7 +1026,7 @@ export default function AdminPage() {
             {/* Header + Search + Add Action */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 02</span>
                   <span>·</span>
                   <span>CURATED WORKS</span>
@@ -1048,7 +1048,7 @@ export default function AdminPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Filter works..."
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                   {searchQuery && (
                     <button
@@ -1069,12 +1069,12 @@ export default function AdminPage() {
                       id: String(Date.now()),
                       title: "",
                       client: "",
-                      category: "UI/UX & Platform Design",
+                      category: "Recognition & Awards",
                       year: new Date().getFullYear().toString(),
-                      image: "/projects/neon-place/img-14.png",
+                      image: "/images/abhi/abhi-03.jpeg",
                       description: "",
                       metrics: "",
-                      deliverables: ["Product UI/UX", "Design System"],
+                      deliverables: ["Client Service", "Operations"],
                       url: "https://",
                     });
                     setProjectModalOpen(true);
@@ -1112,7 +1112,7 @@ export default function AdminPage() {
                       <div className="flex items-center gap-3 font-mono text-[11px] text-white/50 uppercase tracking-widest mb-1.5">
                         <span>[ 0{idx + 1} ]</span>
                         <span>·</span>
-                        <span className="text-[#A5B4FC]">{project.category}</span>
+                        <span className="text-[#FFFFFF]">{project.category}</span>
                       </div>
 
                       <h2 className="font-kanit text-2xl sm:text-3xl font-extrabold text-white">
@@ -1127,7 +1127,7 @@ export default function AdminPage() {
                       </p>
 
                       {project.metrics && (
-                        <div className="mt-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-xs text-[#A5B4FC]/90">
+                        <div className="mt-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] font-mono text-xs text-[#FFFFFF]/90">
                           {project.metrics}
                         </div>
                       )}
@@ -1165,7 +1165,7 @@ export default function AdminPage() {
                             setEditingProject(project);
                             setProjectModalOpen(true);
                           }}
-                          className="min-h-[44px] px-3 text-white hover:text-[#A5B4FC] transition-colors uppercase tracking-wider cursor-pointer inline-flex items-center gap-1.5"
+                          className="min-h-[44px] px-3 text-white hover:text-[#FFFFFF] transition-colors uppercase tracking-wider cursor-pointer inline-flex items-center gap-1.5"
                         >
                           <PencilSimple size={14} />
                           <span>EDIT</span>
@@ -1200,7 +1200,7 @@ export default function AdminPage() {
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 03</span>
                   <span>·</span>
                   <span>CINEMATIC REEL</span>
@@ -1221,7 +1221,7 @@ export default function AdminPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Filter reel..."
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                 </div>
 
@@ -1299,7 +1299,7 @@ export default function AdminPage() {
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 04</span>
                   <span>·</span>
                   <span>TOOLING &amp; RUNTIME</span>
@@ -1344,7 +1344,7 @@ export default function AdminPage() {
                         <span className="font-kanit text-lg sm:text-xl font-bold text-white">
                           {tool.name}
                         </span>
-                        <span className="font-mono text-[11px] text-[#A5B4FC]/80 uppercase">
+                        <span className="font-mono text-[11px] text-[#FFFFFF]/80 uppercase">
                           {tool.proficiency}
                         </span>
                       </div>
@@ -1389,7 +1389,7 @@ export default function AdminPage() {
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 05</span>
                   <span>·</span>
                   <span>HONORS &amp; RECOGNITIONS</span>
@@ -1430,7 +1430,7 @@ export default function AdminPage() {
                       <span className="font-kanit text-2xl font-extrabold text-white">
                         {item.metric}
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded border border-white/10 text-[#A5B4FC]">
+                      <span className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded border border-white/10 text-[#FFFFFF]">
                         {item.tag}
                       </span>
                     </div>
@@ -1477,7 +1477,7 @@ export default function AdminPage() {
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 06</span>
                   <span>·</span>
                   <span>STUDIO OFFERINGS</span>
@@ -1512,7 +1512,7 @@ export default function AdminPage() {
                   className="p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-white/20 transition-all space-y-4 flex flex-col justify-between"
                 >
                   <div className="space-y-2">
-                    <span className="font-mono text-xs text-[#A5B4FC]">
+                    <span className="font-mono text-xs text-[#FFFFFF]">
                       {item.number}
                     </span>
                     <h3 className="font-kanit text-xl font-bold text-white">
@@ -1555,7 +1555,7 @@ export default function AdminPage() {
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 07</span>
                   <span>·</span>
                   <span>CAREER CHRONICLE</span>
@@ -1576,7 +1576,7 @@ export default function AdminPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Filter milestones..."
-                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#A5B4FC] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
+                    className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                 </div>
 
@@ -1612,7 +1612,7 @@ export default function AdminPage() {
                   className="p-6 sm:p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-white/20 transition-all flex flex-col md:flex-row md:items-start justify-between gap-6"
                 >
                   <div className="space-y-3 flex-1">
-                    <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC]">
+                    <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF]">
                       <span>[ 0{idx + 1} ]</span>
                       <span>{item.period}</span>
                     </div>
@@ -1637,7 +1637,7 @@ export default function AdminPage() {
                             key={i}
                             className="text-xs text-white/60 flex items-start gap-2"
                           >
-                            <span className="text-[#A5B4FC] mt-0.5">▪</span>
+                            <span className="text-[#FFFFFF] mt-0.5">▪</span>
                             <span>{h}</span>
                           </li>
                         ))}
@@ -1676,7 +1676,7 @@ export default function AdminPage() {
         {activeTab === "database" && (
           <div className="space-y-16 max-w-4xl mx-auto">
             <div className="border-b border-white/[0.08] pb-10 space-y-4">
-              <div className="flex items-center gap-3 font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+              <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                 <span>CHAPTER 08</span>
                 <span>·</span>
                 <span>DATA ENGINE &amp; BACKUPS</span>
@@ -1693,10 +1693,10 @@ export default function AdminPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="p-6 sm:p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-[#A5B4FC] uppercase">
+                  <span className="font-mono text-xs text-[#FFFFFF] uppercase">
                     CURRENT STORAGE ENGINE
                   </span>
-                  <Database size={18} className="text-[#A5B4FC]" />
+                  <Database size={18} className="text-[#FFFFFF]" />
                 </div>
                 <div className="font-kanit text-2xl font-bold text-white">
                   {mongoConfigured ? "MongoDB Atlas Cloud" : "Local In-Memory / Browser Cache"}
@@ -1710,16 +1710,16 @@ export default function AdminPage() {
 
               <div className="p-6 sm:p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-[#A5B4FC] uppercase">
+                  <span className="font-mono text-xs text-[#FFFFFF] uppercase">
                     DATABASE CONNECTION GUIDE
                   </span>
-                  <Sparkle size={18} className="text-[#A5B4FC]" />
+                  <Sparkle size={18} className="text-[#FFFFFF]" />
                 </div>
                 <p className="text-xs text-white/60 leading-relaxed font-light">
                   Add your cluster connection string to <code className="text-white bg-white/10 px-1 py-0.5 rounded">.env.local</code>:
                 </p>
                 <pre className="p-3 rounded-xl bg-black/60 border border-white/10 text-[11px] font-mono text-white/80 overflow-x-auto">
-                  MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/ria
+                  MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/abhijith
                 </pre>
               </div>
             </div>
@@ -1727,7 +1727,7 @@ export default function AdminPage() {
             {/* Backup & Restore Tools */}
             <div className="space-y-6">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
-                <span className="font-mono text-xs text-[#A5B4FC] uppercase tracking-widest">
+                <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   ARCHIVE SNAPSHOTS
                 </span>
                 <p className="text-xs text-white/50">Export or restore full portfolio content</p>
@@ -1739,7 +1739,7 @@ export default function AdminPage() {
                   href={`data:text/json;charset=utf-8,${encodeURIComponent(
                     JSON.stringify(draft, null, 2)
                   )}`}
-                  download={`ria_portfolio_backup_${new Date().toISOString().split("T")[0]}.json`}
+                  download={`abhijith_portfolio_backup_${new Date().toISOString().split("T")[0]}.json`}
                   className="min-h-[44px] px-6 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all inline-flex items-center gap-2"
                 >
                   <DownloadSimple size={14} />
@@ -1793,7 +1793,7 @@ export default function AdminPage() {
         <div className="flex items-center gap-2 pl-2 truncate">
           <span
             className={`w-2 h-2 rounded-full ${
-              hasUnsavedChanges ? "bg-[#A5B4FC] animate-pulse" : "bg-white/30"
+              hasUnsavedChanges ? "bg-[#FFFFFF] animate-pulse" : "bg-white/30"
             }`}
           />
           <span className="font-mono text-[10px] uppercase tracking-wider text-white/70 truncate">
@@ -1870,7 +1870,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingProject({ ...editingProject, title: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -1883,7 +1883,7 @@ export default function AdminPage() {
                       onChange={(e) =>
                         setEditingProject({ ...editingProject, client: e.target.value })
                       }
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                     />
                   </div>
                   <div className="space-y-1">
@@ -1894,7 +1894,7 @@ export default function AdminPage() {
                       onChange={(e) =>
                         setEditingProject({ ...editingProject, year: e.target.value })
                       }
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                     />
                   </div>
                 </div>
@@ -1907,7 +1907,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingProject({ ...editingProject, category: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -1919,7 +1919,7 @@ export default function AdminPage() {
                       setEditingProject({ ...editingProject, image: val })
                     }
                     aspectRatio="16/9"
-                    placeholder="https://... or /projects/..."
+                    placeholder="https://... or /images/abhi/..."
                   />
                 </div>
 
@@ -1931,7 +1931,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingProject({ ...editingProject, description: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm leading-relaxed"
                   />
                 </div>
 
@@ -1943,7 +1943,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingProject({ ...editingProject, metrics: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -1955,7 +1955,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingProject({ ...editingProject, url: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-xs"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-xs"
                   />
                 </div>
 
@@ -1970,7 +1970,7 @@ export default function AdminPage() {
                         deliverables: e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
                       })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-xs"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-xs"
                   />
                 </div>
               </div>
@@ -2031,7 +2031,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingDesign({ ...editingDesign, title: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2043,7 +2043,7 @@ export default function AdminPage() {
                       setEditingDesign({ ...editingDesign, src: val })
                     }
                     aspectRatio="4/5"
-                    placeholder="https://... or /cases/..."
+                    placeholder="https://... or /images/abhi/..."
                   />
                 </div>
 
@@ -2055,7 +2055,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingDesign({ ...editingDesign, alt: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
               </div>
@@ -2116,7 +2116,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingTool({ ...editingTool, name: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2130,7 +2130,7 @@ export default function AdminPage() {
                         category: e.target.value as "Design & Prototyping" | "Engineering & Workflow",
                       })
                     }
-                    className="w-full bg-[#181818] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-[#181818] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   >
                     <option value="Design & Prototyping">Design &amp; Prototyping</option>
                     <option value="Engineering & Workflow">Engineering &amp; Workflow</option>
@@ -2145,7 +2145,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingTool({ ...editingTool, proficiency: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2157,7 +2157,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingTool({ ...editingTool, desc: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm leading-relaxed"
                   />
                 </div>
               </div>
@@ -2218,7 +2218,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingAchievement({ ...editingAchievement, metric: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2230,7 +2230,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingAchievement({ ...editingAchievement, title: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2242,7 +2242,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingAchievement({ ...editingAchievement, organization: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2254,7 +2254,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingAchievement({ ...editingAchievement, tag: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2266,7 +2266,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingAchievement({ ...editingAchievement, description: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm leading-relaxed"
                   />
                 </div>
               </div>
@@ -2327,7 +2327,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingService({ ...editingService, number: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2339,7 +2339,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingService({ ...editingService, name: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2351,7 +2351,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingService({ ...editingService, description: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm leading-relaxed"
                   />
                 </div>
               </div>
@@ -2413,7 +2413,7 @@ export default function AdminPage() {
                       onChange={(e) =>
                         setEditingJourney({ ...editingJourney, period: e.target.value })
                       }
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                     />
                   </div>
                   <div className="space-y-1">
@@ -2424,7 +2424,7 @@ export default function AdminPage() {
                       onChange={(e) =>
                         setEditingJourney({ ...editingJourney, company: e.target.value })
                       }
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                     />
                   </div>
                 </div>
@@ -2437,7 +2437,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingJourney({ ...editingJourney, role: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   />
                 </div>
 
@@ -2449,7 +2449,7 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingJourney({ ...editingJourney, summary: e.target.value })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-sm leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm leading-relaxed"
                   />
                 </div>
 
@@ -2464,7 +2464,7 @@ export default function AdminPage() {
                         highlights: e.target.value.split("\n").filter(Boolean),
                       })
                     }
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#A5B4FC] font-sans text-xs leading-relaxed"
+                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-xs leading-relaxed"
                   />
                 </div>
               </div>

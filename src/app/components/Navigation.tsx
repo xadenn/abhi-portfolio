@@ -1,99 +1,70 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { X } from "@phosphor-icons/react";
+import React, { useState, useEffect } from "react";
 import { usePortfolio } from "@/context/PortfolioContext";
-import TextRoll from "@/components/ui/text-roll";
-
-const navItems = [
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Journey", href: "#journey" },
-  { label: "Tools", href: "#tools" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Services", href: "#services" },
-  { label: "Designs", href: "#designs" },
-  { label: "Contact", href: "#contact" },
-];
+import { useLenis } from "./SmoothScrollProvider";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navigation() {
   const { portfolio } = usePortfolio();
   const { profile } = portfolio;
-  const [open, setOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const lastScrollY = useRef(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const lenis = useLenis();
 
-  const socialItems = [
-    { label: "LinkedIn", href: profile.socials.linkedin },
-    { label: "GitHub", href: profile.socials.github },
-    { label: "Behance", href: profile.socials.behance },
-    { label: "Resume", href: profile.resumeUrl },
-    { label: "Email", href: `mailto:${profile.email}` },
-  ];
+  const brandName = profile.name.split(" ")[0]?.toUpperCase() || "ABHIJITH";
 
-  // Auto-hide on scroll down, reappear on scroll up or at top
+  // Detect scroll to give fixed header subtle backdrop contrast
   useEffect(() => {
-    const onScroll = () => {
-      const currentY = window.scrollY;
-
-      // Always visible near the top
-      if (currentY <= 40) {
-        setVisible(true);
-        lastScrollY.current = currentY;
-        return;
-      }
-
-      // Hide on scroll down, show on scroll up
-      if (currentY > lastScrollY.current + 6) {
-        setVisible(false); // scrolling down
-      } else if (currentY < lastScrollY.current - 6) {
-        setVisible(true); // scrolling up
-      }
-
-      lastScrollY.current = currentY;
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
     };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile drawer is open
+  // Lock body scroll when menu is open & ESC to close
   useEffect(() => {
-    if (open) {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  }, [isOpen]);
 
-  const handleNavClick = (href: string) => {
-    setOpen(false);
-    if (href.startsWith("#")) {
-      setTimeout(() => {
-        if (
-          typeof window !== "undefined" &&
-          (window as unknown as { lenis?: { scrollTo: (t: string, o?: { duration?: number; offset?: number; easing?: (t: number) => number }) => void } }).lenis
-        ) {
-          (window as unknown as { lenis: { scrollTo: (t: string, o?: { duration?: number; offset?: number; easing?: (t: number) => number }) => void } }).lenis.scrollTo(
-            href,
-            {
-              duration: 1.35,
-              offset: -20,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            }
-          );
-        } else {
-          document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  const navLinks = [
+    { num: "01", label: "Profile", href: "#about" },
+    { num: "02", label: "Expertise", href: "#services" },
+    { num: "03", label: "Experience", href: "#journey" },
+    { num: "04", label: "Performance", href: "#achievements" },
+    { num: "05", label: "Skills", href: "#tools" },
+    { num: "06", label: "Contact", href: "#contact" },
+  ];
+
+  const handleLinkClick = (href: string) => {
+    setIsOpen(false);
+    setTimeout(() => {
+      if (href.startsWith("#")) {
+        const target = document.querySelector(href);
+        if (target) {
+          if (lenis) {
+            lenis.scrollTo(target as HTMLElement, { offset: 0, duration: 1.2 });
+          } else {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
         }
-      }, 100);
-    }
+      }
+    }, 280);
   };
-
-  const brandName = profile.name.split(" ")[0] || "RIA";
 
   return (
     <>
@@ -101,211 +72,137 @@ export default function Navigation() {
         Skip to content
       </a>
 
-      {/* ─────────────────────────────────────────────────────────────
-          PRIMARY FLOATING TEXT NAVBAR
-          - Pure floating text: No background bar, no glass container
-          - Centered navigation links across the screen with zero wrapping
-          - Soft blue (#A5B4FC) kinetic TextRoll hover animation
-          - Auto-hides on scroll down, smoothly reappears on scroll up & top
-          ───────────────────────────────────────────────────────────── */}
-      <nav
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] select-none pointer-events-auto bg-transparent py-5 sm:py-7 px-6 sm:px-10 lg:px-12 ${
-          visible
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0 pointer-events-none"
-        }`}
-        aria-label="Primary navigation"
+      {/* ── FIXED TOP BAR (z-50) - PURE FLOATING TEXTS, ZERO GLASS/CARDS ────────── */}
+      <header
+        className="fixed top-0 inset-x-0 z-50 transition-all duration-300 select-none bg-transparent py-5 sm:py-6 pointer-events-none"
       >
-        <div className="relative flex items-center justify-between w-full max-w-[1600px] mx-auto">
-          {/* Left: Brand Name (Pure crisp floating text with soft blue hover roll) */}
-          <div className="z-10 flex-shrink-0">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick("#hero");
-              }}
-              className="group font-hn text-base sm:text-lg font-bold tracking-widest text-white uppercase hover:text-[#A5B4FC] transition-colors cursor-pointer drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-              aria-label="Scroll to top"
-            >
-              <TextRoll
-                rollColor="text-[#A5B4FC]"
-                className="font-bold tracking-widest text-white group-hover:text-[#A5B4FC] transition-colors"
-              >
-                {brandName}
-              </TextRoll>
-            </a>
-          </div>
-
-          {/* ─────────────────────────────────────────────────────────
-              CENTER: CENTERED FLOATING NAV LINKS (DESKTOP)
-              Clean floating typography, perfectly centered in viewport,
-              guaranteed single-line (never wraps), soft blue hover roll
-              ───────────────────────────────────────────────────────── */}
-          <div className="hidden md:flex items-center justify-center absolute left-1/2 -translate-x-1/2 pointer-events-auto w-max max-w-[85vw] whitespace-nowrap">
-            <nav
-              className="flex items-center gap-4 md:gap-5 lg:gap-7 xl:gap-8 text-xs sm:text-[13px] tracking-widest uppercase font-semibold text-white/90 whitespace-nowrap drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-              aria-label="Main navigation links"
-            >
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => {
-                    if (item.href.startsWith("#")) {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }
-                  }}
-                  className="group cursor-pointer whitespace-nowrap shrink-0 text-white/90 hover:text-[#A5B4FC] transition-colors"
-                >
-                  <TextRoll
-                    rollColor="text-[#A5B4FC]"
-                    className="font-hn tracking-widest uppercase font-semibold text-white/90 group-hover:text-[#A5B4FC] transition-colors whitespace-nowrap"
-                  >
-                    {item.label}
-                  </TextRoll>
-                </a>
-              ))}
-            </nav>
-          </div>
-
-          {/* ─────────────────────────────────────────────────────────
-              RIGHT: MOBILE HAMBURGER / DESKTOP BALANCING SPACER
-              ───────────────────────────────────────────────────────── */}
-          <div className="z-10 flex items-center justify-end md:min-w-[48px]">
-            {/* Mobile Hamburger Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setOpen(!open)}
-              className="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer text-cream p-1 rounded-full hover:bg-white/[0.06] transition-colors drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-            >
-              <div className="relative h-4 w-6 flex flex-col justify-between">
-                <span
-                  className={`block h-[1.75px] w-full bg-cream transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] origin-center ${
-                    open ? "translate-y-[7px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`block h-[1.75px] w-full bg-cream transition-opacity duration-300 ${
-                    open ? "opacity-0" : "opacity-100"
-                  }`}
-                />
-                <span
-                  className={`block h-[1.75px] w-full bg-cream transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] origin-center ${
-                    open ? "-translate-y-[7px] -rotate-45" : ""
-                  }`}
-                />
-              </div>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* ─────────────────────────────────────────────────────────────
-          MOBILE SLIDE-IN NAVIGATION DRAWER
-          Interactive TextRoll typography with soft blue hover
-          ───────────────────────────────────────────────────────────── */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-            className="fixed inset-0 z-50 flex justify-end md:hidden"
-            style={{
-              background: "rgba(5,5,8,0.75)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-            }}
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex items-center justify-between pointer-events-auto">
+          {/* Brand Logo / Name - Floating typography */}
+          <button
+            type="button"
+            onClick={() => handleLinkClick("#hero")}
+            className="group flex items-center gap-2 cursor-pointer focus:outline-none transition-opacity"
+            aria-label="Back to top"
           >
-            {/* Backdrop click to dismiss */}
-            <div
-              className="absolute inset-0"
-              onClick={() => setOpen(false)}
-              aria-hidden="true"
-            />
+            <span className="font-display-hero font-extrabold text-base sm:text-lg tracking-[0.22em] text-white group-hover:text-white/80 transition-colors uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+              {brandName}
+            </span>
+          </button>
 
-            {/* Sliding Panel */}
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-[85%] max-w-sm h-full bg-[#0C0C0C]/95 border-l border-white/10 px-8 py-10 flex flex-col justify-between overflow-y-auto z-10 text-cream"
-              aria-label="Mobile navigation drawer"
-            >
-              {/* Top Drawer Bar: Brand & Close */}
-              <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                <span className="font-hn text-lg font-bold tracking-widest uppercase">
-                  {profile.name}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-cream hover:opacity-70 transition-opacity rounded-full hover:bg-white/10 cursor-pointer"
-                  aria-label="Close menu"
+          {/* Minimal Floating Menu Button - Pure text & icon, zero card/glass */}
+          <button
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="group inline-flex items-center gap-3 cursor-pointer focus:outline-none p-1.5 transition-colors drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">
+              {isOpen ? "Close" : "Menu"}
+            </span>
+
+            {/* Clean Animated 2-Line Hamburger / Cross */}
+            <div className="relative w-4 h-3 flex flex-col justify-between items-center">
+              <span
+                className={`w-4 h-[1.5px] bg-white transition-all duration-300 ease-out origin-center ${
+                  isOpen ? "rotate-45 translate-y-[5.25px]" : ""
+                }`}
+              />
+              <span
+                className={`w-4 h-[1.5px] bg-white transition-all duration-300 ease-out origin-center ${
+                  isOpen ? "-rotate-45 -translate-y-[5.25px]" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+      </header>
+
+      {/* ── MINIMAL LUXURY FULLSCREEN MENU OVERLAY (z-40) ────────── */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 bg-[#070707]/98 backdrop-blur-3xl flex flex-col justify-between pt-16 sm:pt-20 pb-5 sm:pb-7 px-6 sm:px-12 md:px-16 h-[100dvh] max-h-[100dvh] overflow-hidden"
+          >
+            {/* Top Subtitle */}
+            <div className="max-w-6xl w-full mx-auto flex items-center justify-between border-b border-white/[0.08] pb-2.5 sm:pb-3">
+              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#D7E2EA]/50">
+                Navigation
+              </span>
+              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70">
+                Institutional Operations
+              </span>
+            </div>
+
+            {/* Central Vertical Stack of Editorial Links (Guaranteed Single Page Fit) */}
+            <div className="max-w-6xl w-full mx-auto my-auto py-2 sm:py-4 flex flex-col gap-1.5 sm:gap-2 md:gap-2.5">
+              {navLinks.map((link, idx) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -25 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.04 * idx, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <X size={22} weight="bold" />
-                </button>
-              </div>
-
-              {/* Main Navigation Links with TextRoll effect */}
-              <nav className="flex flex-col gap-3 my-auto py-6" aria-label="Site drawer navigation">
-                {navItems.map((item, i) => (
-                  <motion.a
-                    key={item.label}
-                    href={item.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.08 + i * 0.04, duration: 0.4 }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    }}
-                    className="group flex items-center justify-between py-2.5 px-3 rounded-xl border border-transparent hover:border-[#A5B4FC]/30 hover:bg-[#A5B4FC]/[0.05] transition-all cursor-pointer"
+                  <button
+                    type="button"
+                    onClick={() => handleLinkClick(link.href)}
+                    className="group flex items-baseline gap-3 sm:gap-5 text-left cursor-pointer focus:outline-none w-fit"
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cream/30 group-hover:bg-[#A5B4FC] group-hover:scale-125 transition-all" />
-                      <TextRoll
-                        center
-                        rollColor="text-[#A5B4FC]"
-                        className="text-2xl font-hn font-extrabold tracking-tight uppercase text-cream group-hover:text-[#A5B4FC] transition-colors"
-                      >
-                        {item.label}
-                      </TextRoll>
-                    </div>
-                    <span className="text-xs font-mono text-cream/70 group-hover:text-[#A5B4FC] group-hover:translate-x-0.5 transition-all">
-                      0{i + 1} ↗
+                    <span className="font-mono text-xs sm:text-sm text-white/40 group-hover:text-white tracking-widest font-normal transition-colors">
+                      [{link.num}]
                     </span>
-                  </motion.a>
-                ))}
-              </nav>
+                    <span className="font-display-hero font-extrabold uppercase text-2xl sm:text-3xl md:text-4xl lg:text-[2.85rem] leading-[1.05] text-white/50 group-hover:text-white transition-all duration-300 tracking-tight group-hover:translate-x-3 drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                      {link.label}
+                    </span>
+                  </button>
+                </motion.div>
+              ))}
+            </div>
 
-              {/* Bottom Footer Info */}
-              <div className="pt-6 border-t border-white/10 flex flex-col gap-3 text-xs font-hn text-cream/70">
-                <span className="font-mono uppercase text-[11px] tracking-wider text-cream/50">
-                  {profile.role} · {profile.location}
-                </span>
-
-                <div className="flex flex-wrap gap-x-5 gap-y-1 text-cream/80 pt-1">
-                  {socialItems.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target={item.href.startsWith("http") ? "_blank" : undefined}
-                      rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
+            {/* Minimal Luxury Footer */}
+            <div className="max-w-6xl w-full mx-auto pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 font-mono text-[11px] sm:text-xs text-white/50">
+              <div>
+                <p className="uppercase tracking-wider text-white/80">
+                  {profile.name} · {profile.role}
+                </p>
+                <p className="text-white/40 tracking-wider mt-0.5">
+                  {profile.location} · Infosys BPM & State Street Corporation
+                </p>
               </div>
-            </motion.aside>
+
+              <div className="flex items-center gap-6 text-white/70">
+                {profile.socials.linkedin && (
+                  <a
+                    href={profile.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors uppercase tracking-wider"
+                  >
+                    LinkedIn ↗
+                  </a>
+                )}
+                {profile.resumeUrl && (
+                  <a
+                    href={profile.resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors uppercase tracking-wider"
+                  >
+                    Resume PDF ↗
+                  </a>
+                )}
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="hover:text-white transition-colors uppercase tracking-wider"
+                >
+                  Email ↗
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

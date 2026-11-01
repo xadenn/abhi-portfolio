@@ -103,7 +103,7 @@ export default function ImagePickerField({
   // Determine current image source origin
   const getSourceTag = () => {
     if (!value) return null;
-    if (value.startsWith("data:image")) return { label: "IN DATABASE (BASE64)", color: "text-[#A5B4FC] bg-[#A5B4FC]/10 border-[#A5B4FC]/30" };
+    if (value.startsWith("data:image")) return { label: "IN DATABASE (BASE64)", color: "text-[#FFFFFF] bg-[#FFFFFF]/10 border-[#FFFFFF]/30" };
     if (value.startsWith("/uploads/")) return { label: "IN CODEBASE (/UPLOADS)", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30" };
     if (value.startsWith("/")) return { label: "LOCAL ASSET", color: "text-white/60 bg-white/5 border-white/15" };
     return { label: "ONLINE LINK", color: "text-sky-400 bg-sky-500/10 border-sky-500/30" };
@@ -213,7 +213,7 @@ export default function ImagePickerField({
                 onClick={() => setStoreTarget("database")}
                 className={`cursor-pointer transition-colors flex items-center gap-1 px-2 py-0.5 rounded border ${
                   storeTarget === "database"
-                    ? "border-[#A5B4FC]/40 text-[#A5B4FC] bg-[#A5B4FC]/10"
+                    ? "border-[#FFFFFF]/40 text-[#FFFFFF] bg-[#FFFFFF]/10"
                     : "border-transparent text-white/40 hover:text-white/70"
                 }`}
                 title="Embeds directly inside MongoDB Atlas document as Base64 Data URI"
@@ -250,18 +250,18 @@ export default function ImagePickerField({
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={isProcessing}
-            className="w-full min-h-[46px] border border-dashed border-white/20 hover:border-[#A5B4FC] hover:bg-white/[0.02] rounded-xl px-4 py-3 flex items-center justify-center gap-3 text-white/70 hover:text-white transition-all cursor-pointer group disabled:opacity-50"
+            className="w-full min-h-[46px] border border-dashed border-white/20 hover:border-[#FFFFFF] hover:bg-white/[0.02] rounded-xl px-4 py-3 flex items-center justify-center gap-3 text-white/70 hover:text-white transition-all cursor-pointer group disabled:opacity-50"
           >
             {isProcessing ? (
               <>
-                <span className="w-3.5 h-3.5 border-2 border-[#A5B4FC] border-t-transparent rounded-full animate-spin" />
-                <span className="text-[11px] text-[#A5B4FC]">
+                <span className="w-3.5 h-3.5 border-2 border-[#FFFFFF] border-t-transparent rounded-full animate-spin" />
+                <span className="text-[11px] text-[#FFFFFF]">
                   {storeTarget === "database" ? "Encoding & Compressing for Database..." : "Uploading to Server..."}
                 </span>
               </>
             ) : (
               <>
-                <UploadSimple size={16} className="text-[#A5B4FC] group-hover:-translate-y-0.5 transition-transform" />
+                <UploadSimple size={16} className="text-[#FFFFFF] group-hover:-translate-y-0.5 transition-transform" />
                 <span className="text-[11px]">
                   Choose Image from Device (JPG, PNG, WEBP, SVG)
                 </span>
@@ -279,7 +279,7 @@ export default function ImagePickerField({
             value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
-            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-mono text-white focus:outline-none focus:border-[#A5B4FC] transition-colors"
+            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-mono text-white focus:outline-none focus:border-[#FFFFFF] transition-colors"
           />
           {value && (
             <button

@@ -3,6 +3,7 @@ import { getPortfolioData, savePortfolioData } from "@/lib/portfolio-store";
 import { isServerAdminAuthenticated } from "@/lib/auth";
 import { PortfolioData } from "@/types/portfolio";
 
+
 export async function GET() {
   try {
     const result = await getPortfolioData();

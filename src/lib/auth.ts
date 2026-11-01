@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-export const ADMIN_COOKIE_NAME = "ria_admin_session";
+export const ADMIN_COOKIE_NAME = "abhijith_admin_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days in seconds
 
 function getAdminPassword(): string {
@@ -15,7 +15,7 @@ function getAdminPassword(): string {
 }
 
 function getSessionSecret(): string {
-  return process.env.ADMIN_SESSION_SECRET || "ria_verma_atelier_admin_auth_salt_default";
+  return process.env.ADMIN_SESSION_SECRET || "abhijith_sunil_portfolio_admin_auth_salt_default";
 }
 
 /**
@@ -68,7 +68,16 @@ export async function isServerAdminAuthenticated(req?: NextRequest): Promise<boo
     try {
       const cookieStore = await cookies();
       token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
-    } catch {
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "digest" in err &&
+        typeof (err as { digest: string }).digest === "string" &&
+        (err as { digest: string }).digest.startsWith("NEXT_")
+      ) {
+        throw err;
+      }
       return false;
     }
   }

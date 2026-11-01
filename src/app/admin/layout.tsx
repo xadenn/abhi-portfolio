@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
+
 export const metadata: Metadata = {
-  title: "Atelier Studio & Control Panel | Ria Verma",
-  description: "Administrative workspace and cloud data engine for Ria Verma's portfolio.",
+  title: "Control Panel & Operations Console | Abhijith Sunil",
+  description: "Administrative workspace and data engine for Abhijith Sunil's portfolio.",
   robots: {
     index: false,
     follow: false,

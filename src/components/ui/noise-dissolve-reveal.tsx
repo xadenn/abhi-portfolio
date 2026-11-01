@@ -5,7 +5,7 @@ import * as React from "react"
 export interface NoiseDissolveRevealProps {
   /** Content sitting under the veil, revealed as it tears away */
   children?: React.ReactNode
-  /** Veil colour. The sheet that tears. Defaults to #0C0C0C */
+  /** Veil colour. The sheet that tears. Defaults to #070707 */
   veilColor?: string
   /** Luminous tear fringe colour along the tear edge. Defaults to #D7E2EA */
   edgeColor?: string
@@ -224,7 +224,7 @@ function renderTextToCanvas(
   dpr: number,
   title: string,
   subtitle?: string,
-  backgroundColor = "#0C0C0C"
+  backgroundColor = "#070707"
 ) {
   c2d.width = width
   c2d.height = height
@@ -260,7 +260,7 @@ function renderTextToCanvas(
 
 export default function NoiseDissolveReveal({
   children,
-  veilColor = "#0C0C0C",
+  veilColor = "#070707",
   edgeColor = "#D7E2EA",
   veilTitle,
   veilSubtitle,

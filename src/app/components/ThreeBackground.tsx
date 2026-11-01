@@ -37,7 +37,7 @@ function Particles({ count = 120 }: { count?: number }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
-        color="#a5b4fc"
+        color="#FFFFFF"
         transparent
         opacity={0.4}
         sizeAttenuation
@@ -91,10 +91,10 @@ function AmbientCore() {
 function Scene() {
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[6, 6, 4]} intensity={0.7} color="#6366f1" />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[6, 6, 4]} intensity={0.6} color="#ffffff" />
       <directionalLight position={[-6, -4, -4]} intensity={0.3} color="#ffffff" />
-      <pointLight position={[1, 1, 3]} intensity={0.8} color="#818cf8" />
+      <pointLight position={[1, 1, 3]} intensity={0.6} color="#ffffff" />
       <AmbientCore />
       <Particles count={140} />
     </>

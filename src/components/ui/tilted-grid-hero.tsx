@@ -63,9 +63,11 @@ function measure(
   gap: number,
   bend: number,
 ) {
+  // On mobile screens, allow tiles to scale wider so the cylinder is prominent and cinematic
+  const maxWidthPct = width < 768 ? 78 : MAX_WIDTH;
   const h = Math.min(
     (tile / 100) * height,
-    ((MAX_WIDTH / 100) * width) / aspect,
+    ((maxWidthPct / 100) * width) / aspect,
   );
   const radius = width * arc(bend);
   if (!(h > 0) || !(radius > 0))
@@ -83,6 +85,7 @@ function measure(
     sweep,
     unit: round(unit),
     limit: round(Math.min(sweep, limit)),
+    maxWidthPct,
   };
 }
 
@@ -180,14 +183,14 @@ export function TiltedGridHero({
     for (const { src } of images) new Image().src = src;
   }, [images]);
 
-  const { columns, sweep, unit, limit } =
+  const { columns, sweep, unit, limit, maxWidthPct = MAX_WIDTH } =
     layout ?? measure(1200, 560, tileHeight, aspectRatio, gap, bend);
 
   // Every length is a multiple of the tile's height, which follows the
-  // hero's height until MAX_WIDTH caps it on narrow screens.
+  // hero's height until maxWidthPct caps it on narrow screens.
   const u = (n: number) =>
     `calc(${+n.toFixed(4)} * min(${tileHeight}cqh, ${+(
-      MAX_WIDTH / aspectRatio
+      maxWidthPct / aspectRatio
     ).toFixed(4)}cqw))`;
 
   const r = 100 * arc(bend);

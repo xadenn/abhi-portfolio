@@ -6,8 +6,8 @@ import NoiseDissolveReveal from "@/components/ui/noise-dissolve-reveal";
 export default function LoadingScreen() {
   const [isRemoved, setIsRemoved] = useState(false);
 
-  const DELAY_MS = 800;
-  const DURATION_MS = 1400;
+  const DELAY_MS = 600;
+  const DURATION_MS = 1200;
 
   const handleReveal = () => {
     // Unmount once reveal is 100% complete
@@ -24,10 +24,10 @@ export default function LoadingScreen() {
       className="fixed inset-0 z-[9999] w-screen h-screen overflow-hidden pointer-events-none select-none bg-transparent"
     >
       <NoiseDissolveReveal
-        veilColor="#0C0C0C"
+        veilColor="#070707"
         edgeColor="#D7E2EA"
-        veilTitle="RIA VERMA"
-        veilSubtitle="CREATIVE DIRECTION & SPATIAL SYSTEMS"
+        veilTitle="ABHIJITH SUNIL"
+        veilSubtitle="TRADE SETTLEMENT & FINANCIAL OPERATIONS"
         durationMs={DURATION_MS}
         delayMs={DELAY_MS}
         loop={false}

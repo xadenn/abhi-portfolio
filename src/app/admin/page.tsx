@@ -285,7 +285,7 @@ export default function AdminPage() {
   };
 
   const handleDeleteDesign = (id: string) => {
-    if (confirm("Delete this artwork entry?")) {
+    if (confirm("Delete this photo entry?")) {
       markDirty();
       setDraft((prev) => ({
         ...prev,
@@ -404,13 +404,13 @@ export default function AdminPage() {
   // Chapter Navigation Definitions
   const chapters = [
     { id: "profile", index: "01", label: "IDENTITY", count: null },
-    { id: "projects", index: "02", label: "WORKS", count: draft.projects.length },
-    { id: "designs", index: "03", label: "REEL", count: draft.designs.length },
-    { id: "tools", index: "04", label: "STACK", count: draft.tools.length },
-    { id: "achievements", index: "05", label: "HONORS", count: draft.achievements.length },
-    { id: "services", index: "06", label: "DISCIPLINES", count: draft.services.length },
-    { id: "journey", index: "07", label: "CHRONO", count: draft.journey.length },
-    { id: "database", index: "08", label: "SYSTEM", count: null },
+    { id: "journey", index: "02", label: "EXPERIENCE", count: draft.journey.length },
+    { id: "services", index: "03", label: "EXPERTISE", count: draft.services.length },
+    { id: "projects", index: "04", label: "AWARDS", count: draft.projects.length },
+    { id: "achievements", index: "05", label: "METRICS", count: draft.achievements.length },
+    { id: "tools", index: "06", label: "SYSTEMS", count: draft.tools.length },
+    { id: "designs", index: "07", label: "GALLERY", count: draft.designs.length },
+    { id: "database", index: "08", label: "DATABASE", count: null },
   ];
 
   // Helper filter for lists
@@ -462,7 +462,7 @@ export default function AdminPage() {
         <div className="flex flex-col items-center gap-4 anim-fade-in">
           <div className="w-8 h-8 rounded-full border-2 border-white/20 border-t-[#FFFFFF] animate-spin" />
           <span className="text-white/40 uppercase tracking-widest text-[11px]">
-            Verifying Atelier Security Clearance...
+            Authenticating Operations Console...
           </span>
         </div>
       </div>
@@ -646,8 +646,8 @@ export default function AdminPage() {
               type="button"
               onClick={handleLogout}
               className="group inline-flex items-center gap-1.5 min-h-[44px] px-2.5 sm:px-3 text-white/40 hover:text-red-400 transition-colors uppercase tracking-wider text-[11px] cursor-pointer rounded-lg hover:bg-white/[0.04]"
-              title="Sign Out of Atelier"
-              aria-label="Sign out of Admin Studio"
+              title="Lock Operations Console"
+              aria-label="Sign out of Operations Console"
             >
               <SignOut size={13} className="group-hover:translate-x-0.5 transition-transform" />
               <span className="hidden lg:inline">LOCK</span>
@@ -678,7 +678,7 @@ export default function AdminPage() {
           Smooth horizontal glide with touch-friendly targets
           ───────────────────────────────────────────────────────────── */}
       <nav
-        aria-label="Editorial Chapters"
+        aria-label="Operations Navigation"
         className="sticky top-[61px] z-30 bg-[#070707]/95 backdrop-blur-xl border-b border-white/[0.08] px-4 sm:px-8 lg:px-12 py-3"
       >
         <div className="max-w-7xl mx-auto flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-none py-1">
@@ -718,8 +718,7 @@ export default function AdminPage() {
       </nav>
 
       {/* ─────────────────────────────────────────────────────────────
-          EDITORIAL WORKSPACE (Negative Space & Typography)
-          Massive vertical rhythm, generous macro-whitespace
+          OPERATIONS WORKSPACE (Negative Space & Typography)
           ───────────────────────────────────────────────────────────── */}
       <main className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-16 lg:py-20">
         {/* ───────────────────────────────────────────────────────────
@@ -732,7 +731,7 @@ export default function AdminPage() {
               <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                 <span>CHAPTER 01</span>
                 <span>·</span>
-                <span>BIOGRAPHY &amp; TELEMETRY</span>
+                <span>PROFESSIONAL PROFILE &amp; CREDENTIALS</span>
               </div>
               <h1 className="font-kanit text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
                 {draft.profile.name || "Abhijith Sunil"}
@@ -746,10 +745,10 @@ export default function AdminPage() {
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
                 <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  VISUAL PERSONA ASSETS
+                  PORTFOLIO VISUAL ASSETS
                 </span>
                 <p className="text-xs text-white/50">
-                  Full-bleed studio hero and layered foreground cutout portrait
+                  Hero cover background texture and front profile photograph
                 </p>
               </div>
 
@@ -757,25 +756,25 @@ export default function AdminPage() {
                 {/* Hero Background Image */}
                 <div className="p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02]">
                   <ImagePickerField
-                    label="Studio Background Texture"
-                    badge="Full Bleed"
+                    label="Trading Floor / Hero Cover Background"
+                    badge="Cover Image"
                     value={draft.profile.heroImage}
                     onChange={(val) => handleProfileChange("heroImage", val)}
                     aspectRatio="16/9"
-                    placeholder="https://... or /images/..."
+                    placeholder="https://... or /images/abhi/..."
                   />
                 </div>
 
                 {/* Portrait Cutout Overlay */}
                 <div className="p-6 rounded-2xl border border-white/[0.08] bg-white/[0.02]">
                   <ImagePickerField
-                    label="Front Cutout Portrait"
-                    badge="Transparent PNG"
+                    label="Front Profile Portrait"
+                    badge="Portrait"
                     value={draft.profile.portraitImage}
                     onChange={(val) => handleProfileChange("portraitImage", val)}
                     aspectRatio="16/9"
                     previewContain={true}
-                    placeholder="https://... or /images/..."
+                    placeholder="https://... or /images/abhi/..."
                   />
                 </div>
               </div>
@@ -785,7 +784,7 @@ export default function AdminPage() {
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
                 <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  IDENTITY &amp; CREDENTIALS
+                  IDENTITY &amp; CONTACT DISPATCHES
                 </span>
                 <p className="text-xs text-white/50">
                   Primary name, headline role, contact dispatches, and base location
@@ -843,7 +842,7 @@ export default function AdminPage() {
 
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/50">
-                    Atelier Base / City
+                    Location (City, Country)
                   </label>
                   <input
                     type="text"
@@ -855,7 +854,7 @@ export default function AdminPage() {
 
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/50">
-                    University / Alma Mater
+                    University / Degree
                   </label>
                   <input
                     type="text"
@@ -879,21 +878,21 @@ export default function AdminPage() {
               </div>
             </section>
 
-            {/* Manifesto Statement & Kinetic Bio */}
+            {/* Executive Statement & Bio */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
                 <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  EDITORIAL NARRATIVE &amp; STATEMENT
+                  EXECUTIVE HEADLINE &amp; STATEMENT
                 </span>
                 <p className="text-xs text-white/50">
-                  Large typography manifesto and scroll-triggered biography
+                  Value proposition headline and institutional background narrative
                 </p>
               </div>
 
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/50">
-                    Big Headline / Manifesto Statement
+                    Headline / Value Statement
                   </label>
                   <textarea
                     rows={2}
@@ -906,7 +905,7 @@ export default function AdminPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="block text-[11px] font-mono uppercase tracking-widest text-white/50">
-                      Kinetic Biography Paragraph
+                      Professional Background Narrative
                     </label>
                     <span className="font-mono text-[10px] text-white/40">
                       {draft.profile.aboutText.split(/\s+/).filter(Boolean).length} words
@@ -922,19 +921,19 @@ export default function AdminPage() {
               </div>
             </section>
 
-            {/* Social Dispatches */}
+            {/* Social Channels */}
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
                 <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  DIGITAL DISPATCHES
+                  PROFESSIONAL CHANNELS &amp; NETWORKS
                 </span>
-                <p className="text-xs text-white/50">Public channel profiles</p>
+                <p className="text-xs text-white/50">LinkedIn and institutional profiles</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/40">
-                    LinkedIn
+                    LinkedIn URL
                   </label>
                   <input
                     type="text"
@@ -946,7 +945,7 @@ export default function AdminPage() {
 
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/40">
-                    GitHub
+                    GitHub URL (Optional)
                   </label>
                   <input
                     type="text"
@@ -958,7 +957,7 @@ export default function AdminPage() {
 
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/40">
-                    Behance
+                    Alternative Profile / Portfolio URL
                   </label>
                   <input
                     type="text"
@@ -974,15 +973,15 @@ export default function AdminPage() {
             <section className="space-y-8">
               <div className="space-y-1 border-b border-white/[0.06] pb-4">
                 <span className="font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  COLLABORATIONS &amp; TICKER TAGS
+                  INSTITUTIONAL COLLABORATIONS &amp; SPECIALIZATION TAGS
                 </span>
-                <p className="text-xs text-white/50">Comma-separated company names and hero badges</p>
+                <p className="text-xs text-white/50">Comma-separated institutions and specialization badges</p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
                 <div className="space-y-2">
                   <label className="block text-[11px] font-mono uppercase tracking-widest text-white/50">
-                    Collaborators &amp; Clients
+                    Institutions &amp; Employers (Comma-separated)
                   </label>
                   <input
                     type="text"
@@ -1027,12 +1026,12 @@ export default function AdminPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  <span>CHAPTER 02</span>
+                  <span>CHAPTER 04</span>
                   <span>·</span>
-                  <span>CURATED WORKS</span>
+                  <span>AWARDS &amp; RECOGNITIONS</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
-                  Selected Systems ({draft.projects.length})
+                  Executive Honors ({draft.projects.length})
                 </h1>
               </div>
 
@@ -1047,7 +1046,7 @@ export default function AdminPage() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Filter works..."
+                    placeholder="Filter awards..."
                     className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                   {searchQuery && (
@@ -1061,33 +1060,33 @@ export default function AdminPage() {
                   )}
                 </div>
 
-                {/* Add Work CTA */}
+                {/* Add Award CTA */}
                 <button
                   type="button"
                   onClick={() => {
                     setEditingProject({
                       id: String(Date.now()),
                       title: "",
-                      client: "",
+                      client: "State Street Corporation",
                       category: "Recognition & Awards",
                       year: new Date().getFullYear().toString(),
                       image: "/images/abhi/abhi-03.jpeg",
                       description: "",
                       metrics: "",
                       deliverables: ["Client Service", "Operations"],
-                      url: "https://",
+                      url: "",
                     });
                     setProjectModalOpen(true);
                   }}
                   className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
                 >
                   <Plus size={13} weight="bold" />
-                  <span>ADD WORK</span>
+                  <span>ADD AWARD</span>
                 </button>
               </div>
             </div>
 
-            {/* Works List - Editorial Bento Cards */}
+            {/* Awards List Cards */}
             <div className="space-y-8 sm:space-y-12">
               {filteredProjects.map((project, idx) => (
                 <article
@@ -1119,7 +1118,7 @@ export default function AdminPage() {
                         {project.title}
                       </h2>
                       <p className="font-mono text-xs text-white/60 uppercase tracking-wider mt-1">
-                        Client: {project.client}
+                        Institution: {project.client}
                       </p>
 
                       <p className="text-sm text-white/70 leading-relaxed mt-4 font-light max-w-2xl">
@@ -1194,19 +1193,19 @@ export default function AdminPage() {
         )}
 
         {/* ───────────────────────────────────────────────────────────
-            CHAPTER 03: VISUAL REEL
+            CHAPTER 07: GALLERY & MEDIA
             ─────────────────────────────────────────────────────────── */}
         {activeTab === "designs" && (
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  <span>CHAPTER 03</span>
+                  <span>CHAPTER 07</span>
                   <span>·</span>
-                  <span>CINEMATIC REEL</span>
+                  <span>MEDIA &amp; PHOTO VAULT</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
-                  Visual Artworks ({draft.designs.length})
+                  Photo Vault &amp; Assets ({draft.designs.length})
                 </h1>
               </div>
 
@@ -1220,7 +1219,7 @@ export default function AdminPage() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Filter reel..."
+                    placeholder="Filter photos..."
                     className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                 </div>
@@ -1230,16 +1229,16 @@ export default function AdminPage() {
                   onClick={() => {
                     setEditingDesign({
                       id: String(Date.now()),
-                      src: "https://pub-940ccf6255b54fa799a9b01050e6c227.r2.dev/stock-images/767d99bb371a54d0d36751e8cecae43c.jpg",
-                      alt: "New visual art design",
-                      title: "New Visual Artwork",
+                      src: "/images/abhi/abhi-05.jpeg",
+                      alt: "Institutional trading floor photo",
+                      title: "Trading Floor Asset",
                     });
                     setDesignModalOpen(true);
                   }}
                   className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
                 >
                   <Plus size={13} weight="bold" />
-                  <span>ADD ARTWORK</span>
+                  <span>ADD PHOTO</span>
                 </button>
               </div>
             </div>
@@ -1293,16 +1292,16 @@ export default function AdminPage() {
         )}
 
         {/* ───────────────────────────────────────────────────────────
-            CHAPTER 04: TECH STACK
+            CHAPTER 06: FINANCIAL SYSTEMS &amp; TOOLING
             ─────────────────────────────────────────────────────────── */}
         {activeTab === "tools" && (
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  <span>CHAPTER 04</span>
+                  <span>CHAPTER 06</span>
                   <span>·</span>
-                  <span>TOOLING &amp; RUNTIME</span>
+                  <span>SETTLEMENT PLATFORMS &amp; SYSTEMS</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
                   Technical Arsenal ({draft.tools.length})
@@ -1315,16 +1314,16 @@ export default function AdminPage() {
                   setEditingTool({
                     id: String(Date.now()),
                     name: "",
-                    category: "Design & Prototyping",
+                    category: "Engineering & Workflow",
                     proficiency: "Expert",
-                    desc: "Design Systems, Auto-layout, Interactive Prototypes",
+                    desc: "Trade instruction matching, Repo settlements and exception resolution",
                   });
                   setToolModalOpen(true);
                 }}
                 className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
               >
                 <Plus size={13} weight="bold" />
-                <span>ADD TOOL</span>
+                <span>ADD SYSTEM / TOOL</span>
               </button>
             </div>
 
@@ -1383,7 +1382,7 @@ export default function AdminPage() {
         )}
 
         {/* ───────────────────────────────────────────────────────────
-            CHAPTER 05: HONORS
+            CHAPTER 05: OPERATIONAL METRICS
             ─────────────────────────────────────────────────────────── */}
         {activeTab === "achievements" && (
           <div className="space-y-12">
@@ -1392,10 +1391,10 @@ export default function AdminPage() {
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
                   <span>CHAPTER 05</span>
                   <span>·</span>
-                  <span>HONORS &amp; RECOGNITIONS</span>
+                  <span>KEY OPERATIONAL METRICS</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
-                  Industry Honors ({draft.achievements.length})
+                  Key Metrics &amp; Impact ({draft.achievements.length})
                 </h1>
               </div>
 
@@ -1404,18 +1403,18 @@ export default function AdminPage() {
                 onClick={() => {
                   setEditingAchievement({
                     id: String(Date.now()),
-                    metric: "Top 1%",
-                    title: "Design Leadership Award",
-                    organization: "Design Excellence Forum",
-                    description: "Recognized for high-impact platform architecture.",
-                    tag: "Recognition",
+                    metric: "250+",
+                    title: "Daily Repo Settlements",
+                    organization: "Infosys BPM",
+                    description: "Processed Repo 1, DVP Repo and FICC Repo settlements daily with high accuracy.",
+                    tag: "Volume",
                   });
                   setAchievementModalOpen(true);
                 }}
                 className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
               >
                 <Plus size={13} weight="bold" />
-                <span>ADD HONOR</span>
+                <span>ADD METRIC</span>
               </button>
             </div>
 
@@ -1478,12 +1477,12 @@ export default function AdminPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  <span>CHAPTER 06</span>
+                  <span>CHAPTER 03</span>
                   <span>·</span>
-                  <span>STUDIO OFFERINGS</span>
+                  <span>CORE OPERATIONAL COMPETENCIES</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
-                  Disciplines ({draft.services.length})
+                  Expertise &amp; Disciplines ({draft.services.length})
                 </h1>
               </div>
 
@@ -1493,15 +1492,15 @@ export default function AdminPage() {
                   setEditingService({
                     id: String(Date.now()),
                     number: `0${draft.services.length + 1}`,
-                    name: "Design Engineering",
-                    description: "End-to-end design systems and frontend implementations.",
+                    name: "Trade Settlement & Post-Trade Operations",
+                    description: "DVP and FICC Repo settlements, trade affirmations, cash and collateral movements, and failed trade resolution.",
                   });
                   setServiceModalOpen(true);
                 }}
                 className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
               >
                 <Plus size={13} weight="bold" />
-                <span>ADD DISCIPLINE</span>
+                <span>ADD COMPETENCY</span>
               </button>
             </div>
 
@@ -1549,19 +1548,19 @@ export default function AdminPage() {
         )}
 
         {/* ───────────────────────────────────────────────────────────
-            CHAPTER 07: CHRONO / JOURNEY
+            CHAPTER 02: EXPERIENCE / JOURNEY
             ─────────────────────────────────────────────────────────── */}
         {activeTab === "journey" && (
           <div className="space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 font-mono text-xs text-[#FFFFFF] uppercase tracking-widest">
-                  <span>CHAPTER 07</span>
+                  <span>CHAPTER 02</span>
                   <span>·</span>
-                  <span>CAREER CHRONICLE</span>
+                  <span>CAREER TIMELINE &amp; ROLES</span>
                 </div>
                 <h1 className="font-kanit text-3xl sm:text-5xl font-extrabold text-white">
-                  Journey Milestones ({draft.journey.length})
+                  Professional Experience ({draft.journey.length})
                 </h1>
               </div>
 
@@ -1575,7 +1574,7 @@ export default function AdminPage() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Filter milestones..."
+                    placeholder="Filter experience..."
                     className="w-full bg-white/[0.03] border border-white/[0.08] focus:border-[#FFFFFF] rounded-full pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-white/30 focus:outline-none"
                   />
                 </div>
@@ -1585,13 +1584,13 @@ export default function AdminPage() {
                   onClick={() => {
                     setEditingJourney({
                       id: String(Date.now()),
-                      period: "2024 — Present",
-                      company: "New Venture",
-                      role: "Senior Product Designer",
-                      summary: "Leading visual design and architecture.",
+                      period: "June 2025 – Present",
+                      company: "Infosys BPM",
+                      role: "Process Specialist",
+                      summary: "Managing high-volume and time-sensitive trade settlement activities across multiple markets.",
                       highlights: [
-                        "Designed core platform interfaces",
-                        "Led cross-functional design sprints",
+                        "Processed 250+ daily Repo 1, DVP Repo and FICC Repo settlements",
+                        "Reconciled 150+ EMDB and No-SSI trades daily with high STP rates",
                       ],
                     });
                     setJourneyModalOpen(true);
@@ -1599,7 +1598,7 @@ export default function AdminPage() {
                   className="min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider text-white border border-white/20 hover:border-white hover:bg-white/5 active:scale-95 transition-all cursor-pointer inline-flex items-center gap-2"
                 >
                   <Plus size={13} weight="bold" />
-                  <span>ADD MILESTONE</span>
+                  <span>ADD EXPERIENCE</span>
                 </button>
               </div>
             </div>
@@ -1767,7 +1766,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (confirm("Reset entire portfolio archive to original studio defaults?")) {
+                    if (confirm("Reset entire portfolio archive to Abhijith Sunil's verified operational records?")) {
                       resetToDefault();
                       setSaveStatus("Reset to default archive.");
                       setStatusType("info");
@@ -1850,7 +1849,7 @@ export default function AdminPage() {
             <div className="p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <h2 className="font-kanit text-xl font-bold text-white">
-                  {editingProject.title ? "EDIT WORK" : "ADD WORK"}
+                  {editingProject.title ? "EDIT AWARD" : "ADD AWARD"}
                 </h2>
                 <button
                   type="button"
@@ -1863,7 +1862,7 @@ export default function AdminPage() {
 
               <div className="space-y-4 font-mono text-xs">
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Project Title</label>
+                  <label className="text-white/50 uppercase">Award / Honor Title</label>
                   <input
                     type="text"
                     value={editingProject.title}
@@ -1876,7 +1875,7 @@ export default function AdminPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-white/50 uppercase">Client</label>
+                    <label className="text-white/50 uppercase">Issuing Institution</label>
                     <input
                       type="text"
                       value={editingProject.client}
@@ -1913,7 +1912,7 @@ export default function AdminPage() {
 
                 <div className="space-y-1">
                   <ImagePickerField
-                    label="Cover Image"
+                    label="Award Photo / Certificate"
                     value={editingProject.image}
                     onChange={(val) =>
                       setEditingProject({ ...editingProject, image: val })
@@ -1936,7 +1935,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Key Metrics / Impact</label>
+                  <label className="text-white/50 uppercase">Citation / Impact</label>
                   <input
                     type="text"
                     value={editingProject.metrics}
@@ -1948,7 +1947,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Live URL</label>
+                  <label className="text-white/50 uppercase">Verification / Reference URL (Optional)</label>
                   <input
                     type="text"
                     value={editingProject.url || ""}
@@ -1960,7 +1959,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Deliverables (Comma-separated)</label>
+                  <label className="text-white/50 uppercase">Tags / Competencies (Comma-separated)</label>
                   <input
                     type="text"
                     value={editingProject.deliverables.join(", ")}
@@ -1989,14 +1988,14 @@ export default function AdminPage() {
                 onClick={() => handleSaveProject(editingProject)}
                 className="min-h-[44px] px-6 rounded-xl bg-white text-black font-bold uppercase tracking-wider font-mono text-xs hover:bg-[#EFEEE9] active:scale-95 transition-all"
               >
-                SAVE WORK
+                SAVE AWARD
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* 2. Artwork Modal */}
+      {/* 2. Photo Modal */}
       {designModalOpen && editingDesign && (
         <div
           role="dialog"
@@ -2011,7 +2010,7 @@ export default function AdminPage() {
             <div className="p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <h2 className="font-kanit text-xl font-bold text-white">
-                  {editingDesign.title ? "EDIT ARTWORK" : "ADD ARTWORK"}
+                  {editingDesign.title ? "EDIT PHOTO" : "ADD PHOTO"}
                 </h2>
                 <button
                   type="button"
@@ -2024,7 +2023,7 @@ export default function AdminPage() {
 
               <div className="space-y-4 font-mono text-xs">
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Artwork Title</label>
+                  <label className="text-white/50 uppercase">Photo / Asset Title</label>
                   <input
                     type="text"
                     value={editingDesign.title || ""}
@@ -2037,7 +2036,7 @@ export default function AdminPage() {
 
                 <div className="space-y-1">
                   <ImagePickerField
-                    label="Artwork Image"
+                    label="Photo Asset"
                     value={editingDesign.src}
                     onChange={(val) =>
                       setEditingDesign({ ...editingDesign, src: val })
@@ -2048,7 +2047,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Alt Text</label>
+                  <label className="text-white/50 uppercase">Caption / Description</label>
                   <input
                     type="text"
                     value={editingDesign.alt}
@@ -2109,7 +2108,7 @@ export default function AdminPage() {
 
               <div className="space-y-4 font-mono text-xs">
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Tool Name</label>
+                  <label className="text-white/50 uppercase">Platform / System Name</label>
                   <input
                     type="text"
                     value={editingTool.name}
@@ -2127,13 +2126,13 @@ export default function AdminPage() {
                     onChange={(e) =>
                       setEditingTool({
                         ...editingTool,
-                        category: e.target.value as "Design & Prototyping" | "Engineering & Workflow",
+                        category: e.target.value as any,
                       })
                     }
                     className="w-full bg-[#181818] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#FFFFFF] font-sans text-sm"
                   >
-                    <option value="Design & Prototyping">Design &amp; Prototyping</option>
-                    <option value="Engineering & Workflow">Engineering &amp; Workflow</option>
+                    <option value="Engineering & Workflow">Systems &amp; Technical Platforms</option>
+                    <option value="Design & Prototyping">Financial Markets &amp; Instruments</option>
                   </select>
                 </div>
 
@@ -2150,7 +2149,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Skills &amp; Specialties</label>
+                  <label className="text-white/50 uppercase">Systems Proficiency &amp; Workflows</label>
                   <textarea
                     rows={2}
                     value={editingTool.desc}
@@ -2198,7 +2197,7 @@ export default function AdminPage() {
             <div className="p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <h2 className="font-kanit text-xl font-bold text-white">
-                  {editingAchievement.title ? "EDIT HONOR" : "ADD HONOR"}
+                  {editingAchievement.title ? "EDIT METRIC" : "ADD METRIC"}
                 </h2>
                 <button
                   type="button"
@@ -2211,7 +2210,7 @@ export default function AdminPage() {
 
               <div className="space-y-4 font-mono text-xs">
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Prominent Metric (e.g. Top 1%)</label>
+                  <label className="text-white/50 uppercase">Prominent Metric (e.g. 250+, 98%, $2B+)</label>
                   <input
                     type="text"
                     value={editingAchievement.metric}
@@ -2223,7 +2222,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Honor Title</label>
+                  <label className="text-white/50 uppercase">Metric Title (e.g. Daily Settlements, STP Rate)</label>
                   <input
                     type="text"
                     value={editingAchievement.title}
@@ -2235,7 +2234,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Organization</label>
+                  <label className="text-white/50 uppercase">Institution / Employer</label>
                   <input
                     type="text"
                     value={editingAchievement.organization}
@@ -2247,7 +2246,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Tag / Category</label>
+                  <label className="text-white/50 uppercase">Classification Tag (e.g. Volume, Accuracy, Scale, Impact)</label>
                   <input
                     type="text"
                     value={editingAchievement.tag}
@@ -2307,7 +2306,7 @@ export default function AdminPage() {
             <div className="p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <h2 className="font-kanit text-xl font-bold text-white">
-                  {editingService.name ? "EDIT DISCIPLINE" : "ADD DISCIPLINE"}
+                  {editingService.name ? "EDIT COMPETENCY" : "ADD COMPETENCY"}
                 </h2>
                 <button
                   type="button"
@@ -2332,7 +2331,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Discipline Name</label>
+                  <label className="text-white/50 uppercase">Competency Title</label>
                   <input
                     type="text"
                     value={editingService.name}
@@ -2344,7 +2343,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Description</label>
+                  <label className="text-white/50 uppercase">Scope &amp; Core Operational Details</label>
                   <textarea
                     rows={3}
                     value={editingService.description}
@@ -2392,7 +2391,7 @@ export default function AdminPage() {
             <div className="p-6 sm:p-8 space-y-6">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <h2 className="font-kanit text-xl font-bold text-white">
-                  {editingJourney.company ? "EDIT MILESTONE" : "ADD MILESTONE"}
+                  {editingJourney.company ? "EDIT EXPERIENCE" : "ADD EXPERIENCE"}
                 </h2>
                 <button
                   type="button"
@@ -2406,7 +2405,7 @@ export default function AdminPage() {
               <div className="space-y-4 font-mono text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-white/50 uppercase">Period</label>
+                    <label className="text-white/50 uppercase">Tenure / Period (e.g. June 2025 – Present)</label>
                     <input
                       type="text"
                       value={editingJourney.period}
@@ -2417,7 +2416,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-white/50 uppercase">Company / Venture</label>
+                    <label className="text-white/50 uppercase">Institution / Employer</label>
                     <input
                       type="text"
                       value={editingJourney.company}
@@ -2430,7 +2429,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Role</label>
+                  <label className="text-white/50 uppercase">Official Role Title</label>
                   <input
                     type="text"
                     value={editingJourney.role}
@@ -2442,7 +2441,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Summary Statement</label>
+                  <label className="text-white/50 uppercase">Role Scope &amp; Executive Summary</label>
                   <textarea
                     rows={2}
                     value={editingJourney.summary}
@@ -2454,9 +2453,9 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-white/50 uppercase">Highlights (One per line)</label>
+                  <label className="text-white/50 uppercase">Key Contributions &amp; Settlement Metrics (One per line)</label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     value={editingJourney.highlights.join("\n")}
                     onChange={(e) =>
                       setEditingJourney({
@@ -2483,7 +2482,7 @@ export default function AdminPage() {
                 onClick={() => handleSaveJourney(editingJourney)}
                 className="min-h-[44px] px-6 rounded-xl bg-white text-black font-bold uppercase tracking-wider font-mono text-xs hover:bg-[#EFEEE9] active:scale-95 transition-all"
               >
-                SAVE
+                SAVE EXPERIENCE
               </button>
             </div>
           </div>

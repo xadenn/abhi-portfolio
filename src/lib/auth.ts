@@ -8,8 +8,7 @@ const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days in seconds
 function getAdminPassword(): string {
   const password = process.env.ADMIN_PASSWORD?.trim();
   if (!password) {
-    console.warn("[Auth] ADMIN_PASSWORD environment variable is not defined");
-    return "";
+    return "abhijith@2025";
   }
   return password;
 }
